@@ -20,6 +20,6 @@ alias java="$JAVA_HOME/bin/java"
 #SPARK
 export SPARK_HOME=/var/scratch/$USER/spark;
 export PATH=${SPARK_HOME}/bin:${PATH};
-export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/lib/py4j-0.10.9-src.zip;
+export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.9-src.zip;
 EOF
 source ~/.bashrc
