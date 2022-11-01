@@ -27,36 +27,36 @@ spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').ge
 
 from graphframes import *
 
-# # Create edgelist
-# def getEdgelist (filename, spark, sep = ',') :
-#   schema = StructType([ \
-#       StructField("src",StringType(),True), \
-#       StructField("dst",StringType(),True), \
-#     ])
-#   edges = spark.read.csv(filename, schema=schema, sep=sep)
-#   return edges
+# Create edgelist
+def getEdgelist (filename, spark, sep = ',') :
+  schema = StructType([ \
+      StructField("src",StringType(),True), \
+      StructField("dst",StringType(),True), \
+    ])
+  edges = spark.read.csv(filename, schema=schema, sep=sep)
+  return edges
 
-# # Create list of nodes
-# def getNodes (filename, spark, sep = ',') :
-#   schema = StructType([ \
-#       StructField("id",StringType(),True), \
-#       StructField("temp",StringType(),True), \
-#     ])
-#   nodes = spark.read.csv(filename, schema=schema, sep = sep)
+# Create list of nodes
+def getNodes (filename, spark, sep = ',') :
+  schema = StructType([ \
+      StructField("id",StringType(),True), \
+      StructField("temp",StringType(),True), \
+    ])
+  nodes = spark.read.csv(filename, schema=schema, sep = sep)
 
-#   # Only keep column with node indices
-#   nodes = nodes.drop("temp")
-#   return nodes
+  # Only keep column with node indices
+  nodes = nodes.drop("temp")
+  return nodes
 
-# # Run PageRank algorithm, record time, and show results.
-# def repetition_experiment (graphframe, repetitions) :
-#   times = []
-#   for i in range (repetitions) :
-#     start = time.perf_counter()
-#     results = graphframe.pageRank(resetProbability=0.01, maxIter=10)
-#     end = time.perf_counter()
-#     times.append(end-start)
-#   return times
+# Run PageRank algorithm, record time, and show results.
+def repetition_experiment (graphframe, repetitions) :
+  times = []
+  for i in range (repetitions) :
+    start = time.perf_counter()
+    results = graphframe.pageRank(resetProbability=0.01, maxIter=10)
+    end = time.perf_counter()
+    times.append(end-start)
+  return times
 
 # def plot_repetition_experiment (times) :
 #   x = range(1,11)
@@ -82,8 +82,9 @@ from graphframes import *
 #   plt.show()
 #   fig.savefig('repetition.png')
 
-# edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
-# nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
-# g = GraphFrame(nodelist, edgelist)
-# times = repetition_experiment(g, 10)
+edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
+nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
+g = GraphFrame(nodelist, edgelist)
+times = repetition_experiment(g, 10)
+print(times)
 # plot_repetition_experiment(times)
