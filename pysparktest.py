@@ -1,5 +1,3 @@
-import sys
-#sys.path.insert(0, "/var/scratch/ddps2202/spark/bin/pyspark")
 print("hi")
 import pyspark
 # from pyspark import SparkContext, SparkConf
