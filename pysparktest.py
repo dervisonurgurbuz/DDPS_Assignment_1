@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, "/var/scratch/ddps2202/spark/bin/pyspark")
+
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SparkSession
 from pyspark.sql import Row
