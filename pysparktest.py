@@ -25,7 +25,7 @@ context.addPyFile('/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.
 # local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
 spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
 
-# from graphframes import *
+from graphframes import *
 
 # # Create edgelist
 # def getEdgelist (filename, spark, sep = ',') :
