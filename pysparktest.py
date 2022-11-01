@@ -20,7 +20,7 @@ z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./")
 
 context = SparkContext()
-context.addPyFile('/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
+context.addPyFile('/var/scratch/ddps2202/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
 
 # local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
 spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
