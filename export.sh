@@ -8,8 +8,6 @@ fi
 # export SYSTEMD_PAGER=
 # User specific aliases and functions
 
-set -eu
-
 module load gcc
 module load slurm
 module add prun
@@ -22,7 +20,7 @@ alias java="$JAVA_HOME/bin/java"
 #SPARK
 export SPARK_HOME=/var/scratch/$USER/spark;
 export PATH=${SPARK_HOME}/bin:${PATH};
-export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME
-export PYSPARK_PYTHON=python3
+export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH
+export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.8-src.zip:$PYTHONPATH
 EOF
 source ~/.bashrc
