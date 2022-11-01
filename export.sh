@@ -17,8 +17,9 @@ export PATH=${JAVA_HOME}/bin:${PATH};
 alias java="$JAVA_HOME/bin/java"
 
 #SPARK
-export SPARK_HOME=/var/scratch/$USER/spark/python;
+export SPARK_HOME=/var/scratch/$USER/spark;
 export PATH=${SPARK_HOME}/bin:${PATH};
-#export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
+export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME
+export PYSPARK_PYTHON=python3
 EOF
 source ~/.bashrc
