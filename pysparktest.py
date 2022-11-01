@@ -1,32 +1,32 @@
 import sys
-sys.path.insert(0, "/var/scratch/ddps2202/spark/bin/pyspark")
+#sys.path.insert(0, "/var/scratch/ddps2202/spark/bin/pyspark")
+print("hi")
+# from pyspark import SparkContext, SparkConf
+# from pyspark.sql import SparkSession
+# from pyspark.sql import Row
+# import pandas as pd
+# from datetime import datetime, date
+# from pyspark.sql.types import *
+# import time
+# import gzip
+# import requests
+# import shutil
+# import io
+# import zipfile
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-from pyspark import SparkContext, SparkConf
-from pyspark.sql import SparkSession
-from pyspark.sql import Row
-import pandas as pd
-from datetime import datetime, date
-from pyspark.sql.types import *
-import time
-import gzip
-import requests
-import shutil
-import io
-import zipfile
-import numpy as np
-import matplotlib.pyplot as plt
+# r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
+# z = zipfile.ZipFile(io.BytesIO(r.content))
+# z.extractall("./")
 
-r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
-z = zipfile.ZipFile(io.BytesIO(r.content))
-z.extractall("./")
+# context = SparkContext()
+# context.addPyFile('/home/jonathan/miniconda3/lib/python3.9/site-packages/pyspark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
 
-context = SparkContext()
-context.addPyFile('/home/jonathan/miniconda3/lib/python3.9/site-packages/pyspark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
+# # local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
+# spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
 
-# local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
-spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
-
-from graphframes import *
+# from graphframes import *
 
 # # Create edgelist
 # def getEdgelist (filename, spark, sep = ',') :
