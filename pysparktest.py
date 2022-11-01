@@ -85,6 +85,6 @@ def repetition_experiment (graphframe, repetitions) :
 edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
 nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
 g = GraphFrame(nodelist, edgelist)
-times = repetition_experiment(g, 10)
+times = repetition_experiment(g, 1)
 print(times)
 # plot_repetition_experiment(times)
