@@ -15,15 +15,15 @@ import zipfile
 import numpy as np
 # import matplotlib.pyplot as plt
 
-# r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
-# z = zipfile.ZipFile(io.BytesIO(r.content))
-# z.extractall("./")
+r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
+z = zipfile.ZipFile(io.BytesIO(r.content))
+z.extractall("./")
 
-# context = SparkContext()
-# context.addPyFile('/home/jonathan/miniconda3/lib/python3.9/site-packages/pyspark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
+context = SparkContext()
+context.addPyFile('/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
 
-# # local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
-# spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
+# local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
+spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
 
 # from graphframes import *
 
