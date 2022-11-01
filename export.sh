@@ -23,8 +23,5 @@ export PATH=${SPARK_HOME}/bin:${PATH};
 # export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH;
 # export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.8-src.zip:$PYTHONPATH;
 # export PYSPARK_PYTHON=$SPARK_HOME/bin/pyspark;
-
-# EASE OF USE
-export GIT_HOME=/var/scratch/$USER/DDPS_Assignment_1;
 EOF
 source ~/.bashrc
