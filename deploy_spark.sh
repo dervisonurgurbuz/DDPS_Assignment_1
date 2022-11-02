@@ -2,7 +2,7 @@
 # Simple script for deploying Spark in standalone mode on DAS-5 for the DDPS course 2022.
 # Author: Yuxuan Zhao
 
-set -eu # The set command allows you to manage certain flags and characteristics to influence how your bash scripts behave.
+set -e # The set command allows you to manage certain flags and characteristics to influence how your bash scripts behave.
 
 if [[ $# -lt 1 ]] ; then
 	echo ""
