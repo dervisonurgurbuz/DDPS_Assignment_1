@@ -6,6 +6,7 @@ import requests
 import shutil
 import gzip
 import numpy as np
+import sys
 
 r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
 open('soc-Epinions1.txt.gz', 'wb').write(r.content)
@@ -66,6 +67,7 @@ def repetition_experiment (graphframe, repetitions) :
     times.append(end-start)
   return times
 
+nodeCount = sys.argv[1] # in filename verwerken
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, 10)
-np.savetxt('/var/scratch/ddps2202/DDPS_Assignment_1/soc-epinions.npy', np.array(times))
+np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/soc-epinions_workers_{nodeCount}.npy', np.array(times))
