@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_repetition_experiment (times) :
+def plot_repetition_experiment (filename, times) :
   x = range(1,11)
   times_labels = [round(num, 1) for num in times]
   fig, ax = plt.subplots()
@@ -23,7 +23,9 @@ def plot_repetition_experiment (times) :
   fig = plt.gcf()
   fig.set_size_inches(11, 5)
   plt.show()
-  fig.savefig('repetition.png')
+  fig.savefig(f'{filename.split(".")[0]}.png')
 
-times = np.loadtxt("repetition_array.npy")
-plot_repetition_experiment(times)
+filename = "soc-epinions.npy"
+figname = filename.split(".")[0]
+times = np.loadtxt(filename)
+plot_repetition_experiment(filename,times)
