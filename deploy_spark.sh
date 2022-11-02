@@ -34,4 +34,4 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> spark-env.sh
 echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
 
-ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank2.py ${#node_list[@]} soc-Epinions1" 
+ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py ${#node_list[@]} soc-Epinions1" 
