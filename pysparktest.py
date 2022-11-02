@@ -1,18 +1,11 @@
-import pyspark
-from pyspark import SparkContext, SparkConf
+from pyspark import SparkContext
 from pyspark.sql import SparkSession
-from pyspark.sql import Row
-import pandas as pd
-from datetime import datetime, date
 from pyspark.sql.types import *
 import time
-import gzip
 import requests
-import shutil
 import io
 import zipfile
 import numpy as np
-import matplotlib.pyplot as plt
 
 r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
 z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -57,33 +50,8 @@ def repetition_experiment (graphframe, repetitions) :
     times.append(end-start)
   return times
 
-# def plot_repetition_experiment (times) :
-#   x = range(1,11)
-#   times_labels = [round(num, 1) for num in times]
-#   fig, ax = plt.subplots()
-#   fig = plt.bar(x, times)
-
-#   for i in range(len(x)):
-#     plt.text(i+1, times[i], times_labels[i], ha = 'center', va = 'bottom')
-#   plt.xticks(x)
-#   plt.xlabel("Repetition")
-#   plt.ylabel("Running time (seconds)")
-#   plt.ylim([0, max(times)*1.3])
-#   average = sum(times)/len(times)
-#   average = round(average, 1)
-#   std = round(np.std(times),1)
-#   props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-#   plt.text(0.05, 0.95, f"Mean ~ {average}s\nStandard deviation ~ {std}s ", transform=ax.transAxes, fontsize=14,
-#           verticalalignment='top', bbox=props)
-#   plt.title("Spark PageRank performance (10 iterations)") # Rounded down to 1 decimal
-#   fig = plt.gcf()
-#   fig.set_size_inches(11, 5)
-#   plt.show()
-#   fig.savefig('repetition.png')
-
-# edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
-# nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
-# g = GraphFrame(nodelist, edgelist)
-# times = repetition_experiment(g, 1)
-# print(times)
-# plot_repetition_experiment(times)
+edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
+nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
+g = GraphFrame(nodelist, edgelist)
+times = repetition_experiment(g, 10)
+np.savetxt('repetition_array.out', np.array(times))
