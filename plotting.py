@@ -25,5 +25,5 @@ def plot_repetition_experiment (times) :
   plt.show()
   fig.savefig('repetition.png')
 
-times = np.loadtxt("repetition_array.out")
+times = np.loadtxt("repetition_array.npy")
 plot_repetition_experiment(times)
