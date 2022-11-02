@@ -25,7 +25,7 @@ def getEdgelist (filename, spark, sep = ',') :
       StructField("src",StringType(),True), \
       StructField("dst",StringType(),True), \
     ])
-  edges = spark.read.csv(filename, schema=schema, sep=sep)
+  edges = spark.read.csv(filename, schema=schema, sep=sep, header=True)
   return edges
 
 # Create list of nodes
@@ -34,7 +34,7 @@ def getNodes (filename, spark, sep = ',') :
       StructField("id",StringType(),True), \
       StructField("temp",StringType(),True), \
     ])
-  nodes = spark.read.csv(filename, schema=schema, sep = sep)
+  nodes = spark.read.csv(filename, schema=schema, sep = sep, header=True)
 
   # Only keep column with node indices
   nodes = nodes.drop("temp")
