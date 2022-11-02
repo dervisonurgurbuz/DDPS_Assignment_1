@@ -1,14 +1,4 @@
 # This is a sample Python script.
-from turtle import title
-
-import value as value
-from pyspark.shell import sc
-
-from pyspark.sql.functions import when, split
-
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -23,6 +13,7 @@ if __name__ == '__main__':
 import time
 import pyspark
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import when, split
 
 # rdd = fileRDD.collect()
 #
