@@ -12,7 +12,7 @@ import shutil
 import io
 import zipfile
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
 z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -81,9 +81,9 @@ def repetition_experiment (graphframe, repetitions) :
 #   plt.show()
 #   fig.savefig('repetition.png')
 
-edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
-nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
-g = GraphFrame(nodelist, edgelist)
-times = repetition_experiment(g, 1)
-print(times)
+# edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark)
+# nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark)
+# g = GraphFrame(nodelist, edgelist)
+# times = repetition_experiment(g, 1)
+# print(times)
 # plot_repetition_experiment(times)
