@@ -34,7 +34,7 @@ spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 
 # A text dataset is pointed to by path.
 # The path can be either a single text file or a directory of text files
-path = "../../ddps2202/DDPS_Assignment_1/Files/pageviews2"
+path = "../../../../ddps2202/DDPS_Assignment_1/Files/pageviews2"
 # df = sparkContext.wholeTextFiles(path)
 
 
