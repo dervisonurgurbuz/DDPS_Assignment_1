@@ -15,18 +15,7 @@ import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import when, split
 
-# rdd = fileRDD.collect()
-#
-# columns = ["Platform","Page","View Rank"]
-# df = spark.createDataFrame(data=rdd, schema = columns)
-# df.show()
-# rdd.show()
-# print Data
-# for row in rdd: {
-#
-#     print(row)
-# }
-
+# Initialising timer
 st = time.time()
 
 spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
@@ -34,14 +23,14 @@ spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 
 # A text dataset is pointed to by path.
 # The path can be either a single text file or a directory of text files
-path = "../../../../home/ddps2202/DDPS_Assignment_1/Files/pageviews2"
-# df = sparkContext.wholeTextFiles(path)
 
+# Path for das5
+path = "../../../../home/ddps2202/DDPS_Assignment_1/Files/pageviews2"
+
+# Path local trial
+# path = "./Files/pageviews2"
 
 df = spark.read.text(path)
-# df.show(3)
-# df.selectExpr("split(value, ' ') as\
-# (deneme,Text_Data_In_Rows_Using_Text)").show(4,False)
 
 split_col = pyspark.sql.functions.split(df['value'], ' ')
 df3 = df.select(split_col.getItem(0).alias('platform'), split_col.getItem(1).alias('page_title'),
@@ -62,7 +51,7 @@ def findtotalviews(search, df3, search_df):
 
     row_list = df4.collect()
     # print(type(row_list[1].__getitem__('views')))
-    print(len(row_list))
+    # print(len(row_list))
 
     # Summing number of views
     view = 0
@@ -85,14 +74,7 @@ def findtotalviews(search, df3, search_df):
 def exactmatch(search, df3):
     df7 = df3.select("page_title", when(df3.page_title == search, 1).otherwise(0))
     df7.show()
-    # df4 = df3.filter(df3["page_title"] == search)
-    # Other Part search algorithms
 
-    # df3.select("page_title", when(df3.page_title == 'Barack_Obama', 1).otherwise(0))
-    #
-    # df3.select("page_title", df3.page_title.like("Barack_Obama"))
-
-    # dataframe_txt.select(when(dataframe_txt == 'By Lewis Carol')).show(10)
 
 
 def partiallymatch(search, df3):
@@ -101,8 +83,8 @@ def partiallymatch(search, df3):
     df8.show()
 
 
-# Part 1 Main Iterative Implementation
 st2 = time.time()
+# Part 1 Main Iterative Implementation
 for x in range(0, len(rowList)):
     name = str(rowList[x].__getitem__('page_title'))
     print(name)
@@ -119,7 +101,7 @@ search_df.show()
 et1 = time.time()
 # Part 2 Execution
 print("Exactly Match")
-exactmatch("Sirene", df3)
+exactmatch("Siren", df3)
 et2 = time.time()
 
 # Part 3 Execution
@@ -129,13 +111,13 @@ et3 = time.time()
 
 
 total_compile_time = et3 - st
-dataframe_compile_time = st-st2
+dataframe_compile_time = st2-st
 part3_compile_time = et3-et2
-part2_compile_time =  et2-et1
+part2_compile_time = et2-et1
 part1_compile_time = et1 - st2
 
 print('Total Execution time:', total_compile_time, 'seconds')
-print('Reading Dataframe Execution time:', total_compile_time, 'seconds')
+print('Reading Dataframe Execution time:', dataframe_compile_time, 'seconds')
 print('Part1 Execution time', part1_compile_time, 'seconds')
 print('Part2 Execution time', part2_compile_time, 'seconds')
 print('Part3 Execution time', part3_compile_time, 'seconds')
