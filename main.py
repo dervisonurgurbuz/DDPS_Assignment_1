@@ -25,12 +25,18 @@ spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 # The path can be either a single text file or a directory of text files
 
 # Path for das5
-path = "../../../../home/ddps2202/DDPS_Assignment_1/Files/pageviews2"
+path = "../../../../home/ddps2202/DDPS_Assignment_1/Files"
 
 # Path local trial
-# path = "./Files/pageviews2"
+# path = "./Files"
 
 df = spark.read.text(path)
+
+print("Total data row number")
+print(len(df.collect()))
+
+
+
 
 split_col = pyspark.sql.functions.split(df['value'], ' ')
 df3 = df.select(split_col.getItem(0).alias('platform'), split_col.getItem(1).alias('page_title'),
