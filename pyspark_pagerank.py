@@ -57,7 +57,7 @@ if (sys.argv[2] == "crocodile") :
     StructField("temp",StringType(),True), \
   ])
   nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
-  filename = "musae_crocodile"
+
 elif (sys.argv[2] == "soc-Epinions1") :
   # Get soc-epinions dataset
   r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
@@ -95,28 +95,44 @@ elif (sys.argv[2] == "soc-Epinions1") :
       StructField("id",StringType(),True), \
   ])
   nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
-  filename = "soc-Epinions1"
-elif (sys.argv[2] == "topcat") :
-  # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  # open('wiki-topcats.txt.gz', 'wb').write(r.content)
-  # with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
-  #     with open('wiki-topcats.txt', 'wb') as f_out:
-  #         shutil.copyfileobj(f_in, f_out)
-  # schema = StructType([ \
-  #   StructField("src",StringType(),True), \
-  #   StructField("dst",StringType(),True), \
-  # ])
-  # edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
-  # schema = StructType([ \
-  #   StructField("id",StringType(),True), \
-  #   StructField("temp",StringType(),True), \
-  # ])
-  # nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
-  filename = "musae_crocodile"
+
+elif (sys.argv[2] == "wiki-topcats") :
+  r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
+  open('wiki-topcats.txt.gz', 'wb').write(r.content)
+  with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
+      with open('wiki-topcats.txt', 'wb') as f_out:
+          shutil.copyfileobj(f_in, f_out)
+
+  # Create list of nodes from edgelist
+  with open('./wiki-topcats.txt') as f:
+    lines = f.readlines()
+  nodes = set()
+  for i in lines :
+    node1, node2 = i.split(' ')
+    if not ('\n' in node1) :
+      node1 = node1 + '\n'
+    if not ('\n' in node2) :
+      node2 = node2 + '\n'
+    nodes.add(node1)
+    nodes.add(node2)
+  f = open('./wiki-topcats_nodes.txt', "w")
+  f.writelines(nodes)
+  f.close()
+
+  schema = StructType([ \
+    StructField("src",StringType(),True), \
+    StructField("dst",StringType(),True), \
+  ])
+  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt", spark, ' ', False, schema)
+  schema = StructType([ \
+    StructField("id",StringType(),True), \
+  ])
+  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt", spark, ' ', False, schema)
+
 else :
   exit()
 
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, 10)
 nodeCount = sys.argv[1]
-np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{filename}_{nodeCount}.npy', np.array(times))
+np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{sys.argv[2]}_{nodeCount}.npy', np.array(times))
