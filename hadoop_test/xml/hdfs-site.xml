@@ -24,10 +24,10 @@
     
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file:/home/hdfs/namenode</value>
+    <value>file://var/scratch/$USER/hadoop_hdfs/namenode </value>
   </property>
   <property>
-    <name>dfs.datanode.data.dir</name>
-    <value>file:/home/hdfs/datanode</value>
-</property>
+    <name>dfs.datanode.name.dir</name> 
+    <value>file://var/scratch/$USER/hadoop_hdfs/datanode </value> 
+  </property>
 </configuration>
