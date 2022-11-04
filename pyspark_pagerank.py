@@ -104,7 +104,7 @@ elif (sys.argv[2] == "wiki-topcats") :
           shutil.copyfileobj(f_in, f_out)
 
   # Create list of nodes from edgelist
-  with open('./wiki-topcats.txt') as f:
+  with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt') as f:
     lines = f.readlines()
   nodes = set()
   for i in lines :
@@ -115,7 +115,7 @@ elif (sys.argv[2] == "wiki-topcats") :
       node2 = node2 + '\n'
     nodes.add(node1)
     nodes.add(node2)
-  f = open('./wiki-topcats_nodes.txt', "w")
+  f = open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt', "w")
   f.writelines(nodes)
   f.close()
 
