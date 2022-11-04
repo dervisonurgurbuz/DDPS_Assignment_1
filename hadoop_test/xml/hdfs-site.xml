@@ -19,12 +19,12 @@
 <configuration>
     <property>
         <name>dfs.data.dir</name>
-        <value>/app/hadoop/tmp/dfs/name/data</value> 
+        <value>/var/scratch/$USER/hadoop_hdfs/data</value> 
         <final>true</final> 
         </property> 
         <property> 
         <name>dfs.name.dir</name>
-        <value>/app/hadoop/tmp/dfs/name</value> 
+        <value>/var/scratch/$USER/hadoop_hdfs/name</value> 
         <final>true</final> 
     </property>
 </configuration>
