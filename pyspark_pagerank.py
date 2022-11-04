@@ -61,7 +61,7 @@ if (sys.argv[2] == "crocodile") :
 elif (sys.argv[2] == "soc-Epinions1") :
   # Get soc-epinions dataset
   r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
-  open('soc-Epinions1.txt.gz', 'wb').write(r.content)
+  open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz', 'wb').write(r.content)
   with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz', 'rb') as f_in:
       with open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt', 'wb') as f_out:
           shutil.copyfileobj(f_in, f_out)
