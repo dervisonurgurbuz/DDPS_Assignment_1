@@ -81,6 +81,23 @@ elif (sys.argv[2] == "soc-Epinions1") :
   ])
   nodelist = getNodes("./soc-Epinions1_nodes.txt", spark, '\t', False, schema)
   filename = "soc-Epinions1"
+elif (sys.argv[2] == "topcat") :
+  r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
+  open('wiki-topcats.txt.gz', 'wb').write(r.content)
+  with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
+      with open('wiki-topcats.txt', 'wb') as f_out:
+          shutil.copyfileobj(f_in, f_out)
+  schema = StructType([ \
+    StructField("src",StringType(),True), \
+    StructField("dst",StringType(),True), \
+  ])
+  edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
+  schema = StructType([ \
+    StructField("id",StringType(),True), \
+    StructField("temp",StringType(),True), \
+  ])
+  nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
+  filename = "musae_crocodile"
 
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, 10)

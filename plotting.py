@@ -25,7 +25,7 @@ def plot_repetition_experiment (filename, times) :
   plt.show()
   fig.savefig(f'png_files/{filename}.png')
 
-filename = "npy_files/redo_soc-Epinions1_4.npy"
+filename = "npy_files/musae_crocodile_8.npy"
 figname = filename.split(".")[0].split("/")[1]
 times = np.loadtxt(filename)
 plot_repetition_experiment(figname,times)
