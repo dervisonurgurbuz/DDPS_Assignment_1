@@ -32,6 +32,6 @@
   </property>
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/var/scratch/$USER/hadoop_hdfs/temp</value>
+    <value>file:/var/scratch/$USER/hadoop_hdfs/temp</value>
   </property>
 </configuration>
