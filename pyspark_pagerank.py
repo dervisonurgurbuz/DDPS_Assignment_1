@@ -96,39 +96,39 @@ elif (sys.argv[2] == "soc-Epinions1") :
   ])
   nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
 
-elif (sys.argv[2] == "wiki-topcats") :
-  r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'wb').write(r.content)
-  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'rb') as f_in:
-      with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt', 'wb') as f_out:
-          shutil.copyfileobj(f_in, f_out)
+elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
+  # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
+  # open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'wb').write(r.content)
+  # with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'rb') as f_in:
+  #     with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt', 'wb') as f_out:
+  #         shutil.copyfileobj(f_in, f_out)
 
-  # Create list of nodes from edgelist
-  with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt') as f:
-    lines = f.readlines()
-  nodes = set()
-  for i in lines :
-    node1, node2 = i.split(' ')
-    if not ('\n' in node1) :
-      node1 = node1 + '\n'
-    if not ('\n' in node2) :
-      node2 = node2 + '\n'
-    nodes.add(node1)
-    nodes.add(node2)
-  f = open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt', "w")
-  f.writelines(nodes)
-  f.close()
+  # # Create list of nodes from edgelist
+  # with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt') as f:
+  #   lines = f.readlines()
+  # nodes = set()
+  # for i in lines :
+  #   node1, node2 = i.split(' ')
+  #   if not ('\n' in node1) :
+  #     node1 = node1 + '\n'
+  #   if not ('\n' in node2) :
+  #     node2 = node2 + '\n'
+  #   nodes.add(node1)
+  #   nodes.add(node2)
+  # f = open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt', "w")
+  # f.writelines(nodes)
+  # f.close()
 
-  schema = StructType([ \
-    StructField("src",StringType(),True), \
-    StructField("dst",StringType(),True), \
-  ])
-  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt", spark, ' ', False, schema)
-  schema = StructType([ \
-    StructField("id",StringType(),True), \
-  ])
-  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt", spark, ' ', False, schema)
-
+  # schema = StructType([ \
+  #   StructField("src",StringType(),True), \
+  #   StructField("dst",StringType(),True), \
+  # ])
+  # edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt", spark, ' ', False, schema)
+  # schema = StructType([ \
+  #   StructField("id",StringType(),True), \
+  # ])
+  # nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt", spark, ' ', False, schema)
+  exit()
 else :
   exit()
 
