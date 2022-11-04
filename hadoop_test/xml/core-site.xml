@@ -21,8 +21,4 @@
       <name>fs.default.name</name>
       <value>hdfs://fs1/10.141.255.254:9000</value> 
    </property>
-  <property>
-    <name>hadoop.tmp.dir</name>
-    <value>file:/var/scratch/$USER/hadoop_hdfs/temp</value>
-</property>
 </configuration>
