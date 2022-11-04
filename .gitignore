@@ -3,3 +3,4 @@ wikipedia
 env
 *.txt
 *.gz
+!word_count_data.txt
