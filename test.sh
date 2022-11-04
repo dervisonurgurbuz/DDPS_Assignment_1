@@ -1,9 +1,9 @@
 #!/bin/bash
 
-mkdir ~/hadoop_hdfs
-mkdir ~/hadoop_hdfs/namenode
-mkdir ~/hadoop_hdfs/datanode
-mkdir ~/hadoop_hdfs/temp
+mkdir /var/scratch/$USER/DDPS_Assignment_1/hadoop_hdfs
+mkdir /var/scratch/$USER/DDPS_Assignment_1/hadoop_hdfs/namenode
+mkdir /var/scratch/$USER/DDPS_Assignment_1/hadoop_hdfs/datanode
+mkdir /var/scratch/$USER/DDPS_Assignment_1/hadoop_hdfs/temp
 
 # mkdir /var/scratch/$USER/hadoop_hdfs
 # mkdir /var/scratch/$USER/hadoop_hdfs/namenode
