@@ -23,9 +23,9 @@ def plot_repetition_experiment (filename, times) :
   fig = plt.gcf()
   fig.set_size_inches(11, 5)
   plt.show()
-  fig.savefig(f'{filename.split(".")[0]}.png')
+  fig.savefig(f'png_files/{filename}.png')
 
-filename = "Fault_tolerance2_soc-Epinions1_4.npy"
-figname = filename.split(".")[0]
+filename = "npy_files/redo_soc-Epinions1_4.npy"
+figname = filename.split(".")[0].split("/")[1]
 times = np.loadtxt(filename)
-plot_repetition_experiment(filename,times)
+plot_repetition_experiment(figname,times)

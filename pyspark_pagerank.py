@@ -85,4 +85,4 @@ elif (sys.argv[2] == "soc-Epinions1") :
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, 10)
 nodeCount = sys.argv[1]
-np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/redo_{filename}_{nodeCount}.npy', np.array(times))
+np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{filename}_{nodeCount}.npy', np.array(times))
