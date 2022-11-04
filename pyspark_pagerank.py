@@ -98,9 +98,9 @@ elif (sys.argv[2] == "soc-Epinions1") :
 
 elif (sys.argv[2] == "wiki-topcats") :
   r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  open('wiki-topcats.txt.gz', 'wb').write(r.content)
-  with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
-      with open('wiki-topcats.txt', 'wb') as f_out:
+  open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'wb').write(r.content)
+  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'rb') as f_in:
+      with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt', 'wb') as f_out:
           shutil.copyfileobj(f_in, f_out)
 
   # Create list of nodes from edgelist
