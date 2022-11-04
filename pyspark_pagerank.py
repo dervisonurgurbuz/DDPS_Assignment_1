@@ -133,6 +133,6 @@ else :
   exit()
 
 g = GraphFrame(nodelist, edgelist)
-times = repetition_experiment(g, sys.argv[3])
+times = repetition_experiment(g, int(sys.argv[3]))
 nodeCount = sys.argv[1]
 np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{sys.argv[2]}_{nodeCount}.npy', np.array(times))
