@@ -21,12 +21,13 @@
     <name>dfs.replication</name>
     <value>1</value>
   </property>
+    
   <property>
     <name>dfs.name.dir</name>
-    <value>/var/scratch/$USER/hadoop/dfs/name/data</value>
+    <value>/var/scratch/$USER/hadoop_hdfs/namenode </value>
   </property>
   <property>
     <name>dfs.data.dir</name> 
-    <value>/var/scratch/$USER/hadoop/dfs/name/data </value> 
+    <value>/var/scratch/$USER/hadoop_hdfs/datanode </value> 
   </property>
 </configuration>
