@@ -65,21 +65,36 @@ elif (sys.argv[2] == "soc-Epinions1") :
   with gzip.open('soc-Epinions1.txt.gz', 'rb') as f_in:
       with open('soc-Epinions1.txt', 'wb') as f_out:
           shutil.copyfileobj(f_in, f_out)
-  with open('./soc-Epinions1.txt') as f:
+  with open('soc-Epinions1.txt') as f:
       lines = f.readlines()
   lines = lines[4:] # Remove first 4 lines of txt file
-  f = open("./soc-Epinions1.txt", "w")
+  f = open("soc-Epinions1.txt", "w")
   f.writelines(lines)
   f.close()
+
+  # Create list of nodes
+  nodes = set()
+  for i in lines :
+    node1, node2 = i.split('\t')
+    if not ('\n' in node1) :
+      node1 = node1 + '\n'
+    if not ('\n' in node2) :
+      node2 = node2 + '\n'
+    nodes.add(node1)
+    nodes.add(node2)
+  f = open("soc-Epinions1_nodes.txt", "w")
+  f.writelines(nodes)
+  f.close()
+
   schema = StructType([ \
     StructField("src",StringType(),True), \
     StructField("dst",StringType(),True), \
   ])
-  edgelist = getEdgelist("./soc-Epinions1.txt", spark, '\t', False, schema)
+  edgelist = getEdgelist("soc-Epinions1.txt", spark, '\t', False, schema)
   schema = StructType([ \
       StructField("id",StringType(),True), \
   ])
-  nodelist = getNodes("./soc-Epinions1_nodes.txt", spark, '\t', False, schema)
+  nodelist = getNodes("soc-Epinions1_nodes.txt", spark, '\t', False, schema)
   filename = "soc-Epinions1"
 elif (sys.argv[2] == "topcat") :
   r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
@@ -98,6 +113,8 @@ elif (sys.argv[2] == "topcat") :
   ])
   nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
   filename = "musae_crocodile"
+else :
+  exit()
 
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, 10)
