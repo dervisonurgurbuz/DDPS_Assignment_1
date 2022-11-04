@@ -10,7 +10,7 @@ spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 # path = "./Files"
 
 # Path for das5
-path = "../../../../home/ddps2202/DDPS_Assignment_1/Files/pageviews.txt"
+path = "../../../../home/ddps2202/DDPS_Assignment_1/Files"
 
 df = spark.read.text(path)
 
