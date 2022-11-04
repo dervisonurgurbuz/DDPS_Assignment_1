@@ -14,13 +14,13 @@ module add prun
 
 #JAVA
 export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2;
-export PATH=${JAVA_HOME}/bin;
+export PATH=${JAVA_HOME}/bin:${PATH};
 alias java="$JAVA_HOME/bin/java"
 
 #SPARK & HADOOP
 export SPARK_HOME=/var/scratch/$USER/spark;
 export HADOOP_HOME=/var/scratch/$USER/hadoop;
-export PATH=${SPARK_HOME}/bin:${HADOOP_HOME}/bin;
+export PATH=${SPARK_HOME}/bin:${HADOOP_HOME}/bin:${PATH};
 export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.9-src.zip;
 EOF
 source ~/.bashrc
