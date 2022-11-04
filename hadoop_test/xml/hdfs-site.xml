@@ -24,10 +24,10 @@
     
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file:~/hadoop_hdfs/namdssaddsadsasadenode </value>
+    <value>~/hadoop_hdfs/namenode </value>
   </property>
   <property>
     <name>dfs.datanode.name.dir</name> 
-    <value>file:~/hadoop_hdfs/datdsadsaadsanode </value> 
+    <value>~/hadoop_hdfs/datanode </value> 
   </property>
 </configuration>
