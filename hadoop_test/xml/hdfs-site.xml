@@ -24,10 +24,10 @@
     
   <property>
     <name>dfs.name.dir</name>
-    <value>hdfs://var/scratch/$USER/hadoop_hdfs/namenode </value>
+    <value>//var/scratch/$USER/hadoop_hdfs/namenode </value>
   </property>
   <property>
     <name>dfs.data.dir</name> 
-    <value>hdfs://var/scratch/$USER/hadoop_hdfs/datanode </value> 
+    <value>//var/scratch/$USER/hadoop_hdfs/datanode </value> 
   </property>
 </configuration>
