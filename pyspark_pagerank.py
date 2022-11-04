@@ -45,30 +45,30 @@ if (sys.argv[2] == "crocodile") :
   # Get wikipedia dataset
   r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
   z = zipfile.ZipFile(io.BytesIO(r.content))
-  z.extractall("./")
+  z.extractall("/var/scratch/ddps2202/DDPS_Assignment_1/")
 
   schema = StructType([ \
       StructField("src",StringType(),True), \
       StructField("dst",StringType(),True), \
     ])
-  edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
+  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
   schema = StructType([ \
     StructField("id",StringType(),True), \
     StructField("temp",StringType(),True), \
   ])
-  nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
+  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
   filename = "musae_crocodile"
 elif (sys.argv[2] == "soc-Epinions1") :
   # Get soc-epinions dataset
   r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
   open('soc-Epinions1.txt.gz', 'wb').write(r.content)
-  with gzip.open('soc-Epinions1.txt.gz', 'rb') as f_in:
-      with open('soc-Epinions1.txt', 'wb') as f_out:
+  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz', 'rb') as f_in:
+      with open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt', 'wb') as f_out:
           shutil.copyfileobj(f_in, f_out)
-  with open('soc-Epinions1.txt') as f:
+  with open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt') as f:
       lines = f.readlines()
   lines = lines[4:] # Remove first 4 lines of txt file
-  f = open("soc-Epinions1.txt", "w")
+  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt", "w")
   f.writelines(lines)
   f.close()
 
@@ -82,7 +82,7 @@ elif (sys.argv[2] == "soc-Epinions1") :
       node2 = node2 + '\n'
     nodes.add(node1)
     nodes.add(node2)
-  f = open("soc-Epinions1_nodes.txt", "w")
+  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", "w")
   f.writelines(nodes)
   f.close()
 
@@ -90,28 +90,28 @@ elif (sys.argv[2] == "soc-Epinions1") :
     StructField("src",StringType(),True), \
     StructField("dst",StringType(),True), \
   ])
-  edgelist = getEdgelist("soc-Epinions1.txt", spark, '\t', False, schema)
+  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt", spark, '\t', False, schema)
   schema = StructType([ \
       StructField("id",StringType(),True), \
   ])
-  nodelist = getNodes("soc-Epinions1_nodes.txt", spark, '\t', False, schema)
+  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
   filename = "soc-Epinions1"
 elif (sys.argv[2] == "topcat") :
-  r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  open('wiki-topcats.txt.gz', 'wb').write(r.content)
-  with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
-      with open('wiki-topcats.txt', 'wb') as f_out:
-          shutil.copyfileobj(f_in, f_out)
-  schema = StructType([ \
-    StructField("src",StringType(),True), \
-    StructField("dst",StringType(),True), \
-  ])
-  edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
-  schema = StructType([ \
-    StructField("id",StringType(),True), \
-    StructField("temp",StringType(),True), \
-  ])
-  nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
+  # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
+  # open('wiki-topcats.txt.gz', 'wb').write(r.content)
+  # with gzip.open('wiki-topcats.txt.gz', 'rb') as f_in:
+  #     with open('wiki-topcats.txt', 'wb') as f_out:
+  #         shutil.copyfileobj(f_in, f_out)
+  # schema = StructType([ \
+  #   StructField("src",StringType(),True), \
+  #   StructField("dst",StringType(),True), \
+  # ])
+  # edgelist = getEdgelist("./wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
+  # schema = StructType([ \
+  #   StructField("id",StringType(),True), \
+  #   StructField("temp",StringType(),True), \
+  # ])
+  # nodelist = getNodes("./wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
   filename = "musae_crocodile"
 else :
   exit()
