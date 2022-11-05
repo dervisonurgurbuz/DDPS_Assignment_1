@@ -4,7 +4,7 @@ set -e
 
 if [[ $# -lt 1 ]] ; then
 	echo ""
-	echo "usage: sh deploy_hadoop.sh [iterations"
+	echo "usage: sh deploy_hadoop.sh [pagerank iterations]"
 	echo "for example: sh deploy_hadoop.sh 10"
 	echo ""
 	exit 1
