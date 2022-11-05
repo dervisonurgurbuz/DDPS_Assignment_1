@@ -10,10 +10,10 @@ if [[ $# -lt 1 ]] ; then
 	exit 1
 fi
 
-#curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
-#wget -O /var/scratch/$USER/hadoop-2.7.0.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz && \
-#tar -zxf /var/scratch/$USER/hadoop-2.7.0.tar.gz -C /var/scratch/$USER && mv /var/scratch/$USER/hadoop-2.7.0 /var/scratch/$USER/hadoop
-#rm /var/scratch/$USER/hadoop-2.7.0.tar.gz
+# curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
+# wget -O /var/scratch/$USER/hadoop-2.7.0.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz && \
+# tar -zxf /var/scratch/$USER/hadoop-2.7.0.tar.gz -C /var/scratch/$USER && mv /var/scratch/$USER/hadoop-2.7.0 /var/scratch/$USER/hadoop
+# rm /var/scratch/$USER/hadoop-2.7.0.tar.gz
 
 echo "Deploying hadoop on ${1}"
 nodes=${1}
@@ -27,6 +27,7 @@ echo "worker is "$worker
 #cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
 # Create namenode and datanode directories
+rm -r /var/scratch/$USER/hadoop_hdfs
 mkdir -p /var/scratch/$USER/hadoop_hdfs
 mkdir -p /var/scratch/$USER/hadoop_hdfs/namenode
 mkdir -p /var/scratch/$USER/hadoop_hdfs/datanode
