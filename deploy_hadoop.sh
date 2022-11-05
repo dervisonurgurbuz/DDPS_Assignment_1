@@ -29,5 +29,5 @@ cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git && c
 
 # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
 javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
-# jar -cf it/pagerank.jar it/
+jar -cf it/pagerank.jar it/
 # hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output
