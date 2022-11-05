@@ -9,6 +9,7 @@ import numpy as np
 import shutil
 import sys
 import gzip
+import os
 
 context = SparkContext()
 context.addPyFile('/var/scratch/ddps2202/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
@@ -71,6 +72,7 @@ elif (sys.argv[2] == "soc-Epinions1") :
   f = open("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt", "w")
   f.writelines(lines)
   f.close()
+  os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz')
 
   # Create list of nodes
   nodes = set()
@@ -128,6 +130,7 @@ elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
   #   StructField("id",StringType(),True), \
   # ])
   # nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt", spark, ' ', False, schema)
+  #os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz')
   exit()
 else :
   exit()
