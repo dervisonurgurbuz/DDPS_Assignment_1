@@ -28,11 +28,6 @@ echo "worker is "$worker
 #rm /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz
 #rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
 
-#curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
-#wget -O /var/scratch/$USER/hadoop-2.7.0.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz && \
-#tar -zxf /var/scratch/$USER/hadoop-2.7.0.tar.gz -C /var/scratch/$USER && mv /var/scratch/$USER/hadoop-2.7.0 /var/scratch/$USER/hadoop
-#rm /var/scratch/$USER/hadoop-2.7.0.tar.gz
-
 source export.sh
 
 cd /var/scratch/$USER/spark/conf && cp spark-env.sh.template spark-env.sh && cp workers.template workers
