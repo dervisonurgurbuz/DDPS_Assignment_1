@@ -35,7 +35,7 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 # Create input and output directories on hdfs
 hadoop fs -mkdir -p /input
 hadoop fs -mkdir -p /output
-hadoop fs -put -p datasets/soc-Epinions1.txt /input
+hadoop fs -put -f datasets/soc-Epinions1.txt /input
 
 # Download pagerank for hadoop implementation
 cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git && cd hadoop-pagerank
