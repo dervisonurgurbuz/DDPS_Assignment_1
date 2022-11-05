@@ -47,7 +47,8 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 hdfs namenode -format
 
 # Start hadoop DFS daemons and yarn 
-start-all.sh
+start-dfs.sh
+start-yarn.sh
 
 # Create input and output directories on hdfs
 hadoop fs -mkdir -p /input
@@ -74,7 +75,8 @@ DIFF=$(echo "$end_time - $start_time" | bc)
 # hadoop fs -rm -r /output
 
 # Stop daemons & yarn
-stop-all.sh
+stop-dfs.sh
+stop-yarn.sh
 
 # Print results
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
