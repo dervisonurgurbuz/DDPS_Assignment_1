@@ -23,24 +23,30 @@ worker=${node_list[@]:1}
 echo "master is "$master
 echo "worker is "$worker
 
-# Originally slaves only contains 'localhost'
+# Originally, slaves only contains 'localhost'
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
+# Create namenode and datanode directories
 mkdir -p /var/scratch/$USER/hadoop_hdfs
 mkdir -p /var/scratch/$USER/hadoop_hdfs/namenode
 mkdir -p /var/scratch/$USER/hadoop_hdfs/datanode
 mkdir -p /var/scratch/$USER/hadoop_hdfs/temp
+
+# Copy configuration files to hadoop folder
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
+# Add java to hadoop environment scripts
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
 # Format namenode
 hdfs namenode -format
+
+# Start hadoop DFS daemons and yarn 
 start-all.sh
 
 # Create input and output directories on hdfs
@@ -52,15 +58,23 @@ hadoop fs -put -f datasets/soc-Epinions1.txt /input
 cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
 
 # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
+# Compile pagerank code, then turn to jar file.
 javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
 jar -cf it/pagerank.jar it/
 cd ..
-start_time=$(date +%s.%N)
 
+# # Run hadoop and pagerank, and track time.
+start_time=$(date +%s.%N)
 hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${2}
 end_time=$(date +%s.%N)
+DIFF=$(echo "$end_time - $start_time" | bc)
+
+# Remove folders in hdfs after use.
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
-DIFF=$(echo "$end_time - $start_time" | bc)
+
+# Stop daemons & yarn
 stop-all.sh
+
+# Print results
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
