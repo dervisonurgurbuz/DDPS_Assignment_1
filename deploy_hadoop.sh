@@ -51,4 +51,4 @@ end_time=$(date +%s.%N)
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
 DIFF=$(echo "$end_time - $start_time" | bc)
-echo "Elapsed time for ${1} iterations: $DIFF seconds"
+echo "Elapsed time for ${1} iteration(s): $DIFF seconds"
