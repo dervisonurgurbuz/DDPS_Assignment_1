@@ -91,18 +91,19 @@ def partiallymatch(search, df3):
 
 st2 = time.time()
 # Part 1 Main Iterative Implementation
+view = 0
 for x in range(0, len(rowList)):
-    name = str(rowList[x].__getitem__('page_title'))
-    print(name)
+    view += int(rowList[x].__getitem__('views'))
 
-    df6 = search_df.filter(search_df["page_title"] == name)
 
-    if len(df6.collect()) == 0:
-        print("Searching views for:")
-        print(name, "\n")
-        search_df = findtotalviews(name, df3, search_df)
+    # df6 = search_df.filter(search_df["page_title"] == name)
+    #
+    # if len(df6.collect()) == 0:
+    #     print("Searching views for:")
+    #     print(name, "\n")
+    #     search_df = findtotalviews(name, df3, search_df)
 
-search_df.show()
+print("Hear is the total view: ",view)
 
 et1 = time.time()
 # Part 2 Execution
