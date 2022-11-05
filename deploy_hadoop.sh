@@ -24,7 +24,7 @@ echo "master is "$master
 echo "worker is "$worker
 
 # Originally, slaves only contains 'localhost'
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
 # Create namenode and datanode directories
 mkdir -p /var/scratch/$USER/hadoop_hdfs
@@ -33,17 +33,17 @@ mkdir -p /var/scratch/$USER/hadoop_hdfs/datanode
 mkdir -p /var/scratch/$USER/hadoop_hdfs/temp
 
 # Copy configuration files to hadoop folder
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
 # Add java to hadoop environment scripts
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
-# Format namenode
+# Format namenode (might need manual confirmation)
 hdfs namenode -format
 
 # Start hadoop DFS daemons and yarn 
