@@ -19,6 +19,8 @@ spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').ge
 
 from graphframes import *
 
+dataset = sys.argv[2]
+
 # Create edgelist
 def getEdgelist (filename, spark, sep, headerValue, schema) :
   edges = spark.read.csv(filename, schema=schema, sep=sep, header=headerValue)
@@ -42,7 +44,7 @@ def repetition_experiment (graphframe, repetitions) :
     times.append(end-start)
   return times
 
-if (sys.argv[2] == "crocodile") :
+if (dataset == "crocodile") :
   # Get wikipedia dataset
   r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
   z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -59,7 +61,7 @@ if (sys.argv[2] == "crocodile") :
   ])
   nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
 
-elif (sys.argv[2] == "soc-Epinions1") :
+elif (dataset == "soc-Epinions1") :
   # Get soc-epinions dataset
   r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
   open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz', 'wb').write(r.content)
@@ -98,7 +100,7 @@ elif (sys.argv[2] == "soc-Epinions1") :
   ])
   nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
 
-elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
+elif (dataset == "wiki-topcats") : # RAM issues, unused
   # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
   # open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'wb').write(r.content)
   # with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'rb') as f_in:
@@ -138,4 +140,4 @@ else :
 g = GraphFrame(nodelist, edgelist)
 times = repetition_experiment(g, int(sys.argv[3]))
 nodeCount = sys.argv[1]
-np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{sys.argv[2]}_{nodeCount}.npy', np.array(times))
+np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{dataset}_{nodeCount}.npy', np.array(times))
