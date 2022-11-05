@@ -24,7 +24,7 @@ echo "master is "$master
 echo "worker is "$worker
 
 # Originally, slaves only contains 'localhost'
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
+#cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
 # Create namenode and datanode directories
 mkdir -p /var/scratch/$USER/hadoop_hdfs
