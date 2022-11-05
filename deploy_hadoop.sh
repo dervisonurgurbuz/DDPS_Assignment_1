@@ -44,10 +44,11 @@ cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || t
 javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
 jar -cf it/pagerank.jar it/
 cd ..
-start_time=$(date +%s)
+start_time=$(date +%s.%N)
+
 hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${1}
-end_time=$(date +%s)
+end_time=$(date +%s.%N)
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
-elapsed=$(( end_time - start_time ))
-echo "Elapsed time for ${1} iterations: $elapsed"
+DIFF=$(echo "$start_time - $end_time" | bc)
+echo "Elapsed time for ${1} iterations: $DIFF seconds"
