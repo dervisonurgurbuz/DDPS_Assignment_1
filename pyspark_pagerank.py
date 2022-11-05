@@ -20,6 +20,7 @@ spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').ge
 from graphframes import *
 
 dataset = sys.argv[2]
+iterations = int(sys.argv[3])
 
 # Create edgelist
 def getEdgelist (filename, spark, sep, headerValue, schema) :
@@ -138,6 +139,6 @@ else :
   exit()
 
 g = GraphFrame(nodelist, edgelist)
-times = repetition_experiment(g, int(sys.argv[3]))
+times = repetition_experiment(g, iterations)
 nodeCount = sys.argv[1]
-np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/{dataset}_{nodeCount}.npy', np.array(times))
+np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR{iterations}_{dataset}_{nodeCount}.npy', np.array(times))
