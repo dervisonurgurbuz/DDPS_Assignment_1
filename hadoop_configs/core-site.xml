@@ -21,4 +21,8 @@
       <name>fs.default.name</name>
       <value>hdfs://10.141.0.23:9000</value> 
    </property>
+   <property>
+    <name>hadoop.tmp.dir</name>
+    <value>../hadoop_hdfs/temp</value>
+  </property>
 </configuration>
