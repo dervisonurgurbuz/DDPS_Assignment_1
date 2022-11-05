@@ -46,33 +46,33 @@ if (sys.argv[2] == "crocodile") :
   # Get wikipedia dataset
   r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
   z = zipfile.ZipFile(io.BytesIO(r.content))
-  z.extractall("/var/scratch/ddps2202/DDPS_Assignment_1/")
+  z.extractall("/var/scratch/ddps2202/DDPS_Assignment_1/datasets")
 
   schema = StructType([ \
       StructField("src",StringType(),True), \
       StructField("dst",StringType(),True), \
     ])
-  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
+  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
   schema = StructType([ \
     StructField("id",StringType(),True), \
     StructField("temp",StringType(),True), \
   ])
-  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
+  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
 
 elif (sys.argv[2] == "soc-Epinions1") :
   # Get soc-epinions dataset
   r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
-  open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz', 'wb').write(r.content)
-  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz', 'rb') as f_in:
-      with open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt', 'wb') as f_out:
+  open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz', 'wb').write(r.content)
+  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz', 'rb') as f_in:
+      with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt', 'wb') as f_out:
           shutil.copyfileobj(f_in, f_out)
-  with open('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt') as f:
+  with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt') as f:
       lines = f.readlines()
   lines = lines[4:] # Remove first 4 lines of txt file
-  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt", "w")
+  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt", "w")
   f.writelines(lines)
   f.close()
-  os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt.gz')
+  os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz')
 
   # Create list of nodes
   nodes = set()
@@ -84,7 +84,7 @@ elif (sys.argv[2] == "soc-Epinions1") :
       node2 = node2 + '\n'
     nodes.add(node1)
     nodes.add(node2)
-  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", "w")
+  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1_nodes.txt", "w")
   f.writelines(nodes)
   f.close()
 
@@ -92,21 +92,21 @@ elif (sys.argv[2] == "soc-Epinions1") :
     StructField("src",StringType(),True), \
     StructField("dst",StringType(),True), \
   ])
-  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1.txt", spark, '\t', False, schema)
+  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt", spark, '\t', False, schema)
   schema = StructType([ \
       StructField("id",StringType(),True), \
   ])
-  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
+  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
 
 elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
   # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  # open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'wb').write(r.content)
-  # with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz', 'rb') as f_in:
-  #     with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt', 'wb') as f_out:
+  # open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'wb').write(r.content)
+  # with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'rb') as f_in:
+  #     with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt', 'wb') as f_out:
   #         shutil.copyfileobj(f_in, f_out)
 
   # # Create list of nodes from edgelist
-  # with open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt') as f:
+  # with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt') as f:
   #   lines = f.readlines()
   # nodes = set()
   # for i in lines :
@@ -117,7 +117,7 @@ elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
   #     node2 = node2 + '\n'
   #   nodes.add(node1)
   #   nodes.add(node2)
-  # f = open('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt', "w")
+  # f = open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats_nodes.txt', "w")
   # f.writelines(nodes)
   # f.close()
 
@@ -125,12 +125,12 @@ elif (sys.argv[2] == "wiki-topcats") : # RAM issues, unused
   #   StructField("src",StringType(),True), \
   #   StructField("dst",StringType(),True), \
   # ])
-  # edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt", spark, ' ', False, schema)
+  # edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt", spark, ' ', False, schema)
   # schema = StructType([ \
   #   StructField("id",StringType(),True), \
   # ])
-  # nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats_nodes.txt", spark, ' ', False, schema)
-  #os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/wiki-topcats.txt.gz')
+  # nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats_nodes.txt", spark, ' ', False, schema)
+  #os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz')
   exit()
 else :
   exit()
