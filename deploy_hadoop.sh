@@ -18,16 +18,20 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
+# # Optional?
 # hdfs namenode -format
 # start-dfs.sh
 
-# hadoop fs -mkdir /input
-# hadoop fs -mkdir /output
-# hadoop fs -put datasets/soc-Epinions1.txt /input
+# Create input and output directories on hdfs
+hadoop fs -mkdir /input
+hadoop fs -mkdir /output
+hadoop fs -put datasets/soc-Epinions1.txt /input
 
+# Download pagerank for hadoop implementation
 cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git && cd hadoop-pagerank
 
 # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
 javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
 jar -cf it/pagerank.jar it/
-# hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output
+cd ..
+hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output
