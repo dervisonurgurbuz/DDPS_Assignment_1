@@ -23,9 +23,8 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
 hadoop fs -mkdir /input
 hadoop fs -mkdir /output
-hadoop fs -put DDPS_Assignment_1/datasets/soc-Epinions1 /input
+hadoop fs -put datasets/soc-Epinions1.txt /input
 
-# cd ..
 # git clone https://github.com/danielepantaleone/hadoop-pagerank.git
 # cd hadoop-pagerank
 
