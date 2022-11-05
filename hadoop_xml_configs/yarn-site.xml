@@ -23,7 +23,7 @@
   </property>
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>node123</value>
+    <value>0.0.0.0</value>
   </property>
   <property>
     <name>yarn.nodemanager.aux-services</name>
