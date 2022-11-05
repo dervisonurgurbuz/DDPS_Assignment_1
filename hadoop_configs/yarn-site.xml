@@ -23,11 +23,11 @@
   </property>
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>10.141.0.23</value>
+    <value>0.0.0.0</value>
   </property>
   <property>
     <name>yarn.resourcemanager.address</name>
-    <value>10.141.0.23:8032</value>
+    <value>0.0.0.0:8032</value>
   </property>
   <property>
     <name>yarn.nodemanager.aux-services</name>
