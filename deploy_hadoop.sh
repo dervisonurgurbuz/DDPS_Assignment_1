@@ -38,7 +38,13 @@ hadoop fs -mkdir -p /output
 hadoop fs -put -f datasets/soc-Epinions1.txt /input
 
 # Download pagerank for hadoop implementation
-cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git && cd hadoop-pagerank
+cd .. 
+folder = "hadoop-pagerank"
+url = https://github.com/danielepantaleone/hadoop-pagerank.git
+if ! git clone "${url}" "${folder}" 2>/dev/null && [ -d "${folder}" ] ; then
+    echo "Clone failed because the folder ${folder} exists"
+fi
+cd hadoop-pagerank
 
 # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
 javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
