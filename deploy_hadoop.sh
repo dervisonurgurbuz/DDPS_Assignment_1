@@ -14,8 +14,12 @@ cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/core-site.xml /var/sc
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
-cd .. && git clone https://github.com/xiaojinhe/PageRank.git && java cf pr.jar PageRank/main/java/*.java
+#cd .. && git clone https://github.com/xiaojinhe/PageRank.git && cd PageRank/main/java/ && jar cf pr.jar *.java && cd ../../../ && mv PageRank/main/java/pr.jar ./
 
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
+
+# hdfs namenode -format
+# start-dfs.sh
+# cd DDPS_Assignment_1 && hadoop fs -mkdir /input && hadoop fs -put soc-Epinions1 /input
