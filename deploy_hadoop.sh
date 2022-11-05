@@ -39,9 +39,9 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
-# # Optional?
-# hdfs namenode -format
-# start-dfs.sh
+# Format namenode
+hdfs namenode -format
+start-all.sh
 
 # Create input and output directories on hdfs
 hadoop fs -mkdir -p /input
@@ -62,4 +62,5 @@ end_time=$(date +%s.%N)
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
 DIFF=$(echo "$end_time - $start_time" | bc)
+stop-all.sh
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
