@@ -44,7 +44,7 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 
 # Format namenode (might need manual confirmation)
-hdfs namenode -format
+#hdfs namenode -format
 
 # Start hadoop DFS daemons and yarn 
 start-all.sh
