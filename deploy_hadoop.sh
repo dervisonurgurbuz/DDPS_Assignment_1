@@ -45,3 +45,4 @@ javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageR
 jar -cf it/pagerank.jar it/
 cd ..
 hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${1}
+echo "TESTTTTTTTTTTTTTTT"
