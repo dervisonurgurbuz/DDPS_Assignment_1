@@ -40,7 +40,8 @@ hadoop fs -put -f datasets/soc-Epinions1.txt /input
 # Download pagerank for hadoop implementation
 cd .. 
 folder = "hadoop-pagerank"
-url = https://github.com/danielepantaleone/hadoop-pagerank.git
+url = "https://github.com/danielepantaleone/hadoop-pagerank.git"
+# inspiration: https://stackoverflow.com/questions/36498981/shell-dont-fail-git-clone-if-folder-already-exists
 if ! git clone "${url}" "${folder}" 2>/dev/null && [ -d "${folder}" ] ; then
     echo "Clone failed because the folder ${folder} exists"
 fi
