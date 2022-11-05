@@ -33,8 +33,8 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
 # start-dfs.sh
 
 # Create input and output directories on hdfs
-hadoop fs -mkdir /input
-hadoop fs -mkdir /output
+hadoop fs -mkdir -p /input
+hadoop fs -mkdir -p /output
 hadoop fs -put datasets/soc-Epinions1.txt /input
 
 # Download pagerank for hadoop implementation
