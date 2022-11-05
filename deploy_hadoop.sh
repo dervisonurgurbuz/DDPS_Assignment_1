@@ -4,8 +4,8 @@ set -e
 
 if [[ $# -lt 1 ]] ; then
 	echo ""
-	echo "usage: sh deploy_hadoop.sh [pagerank iterations]"
-	echo "for example: sh deploy_hadoop.sh 10"
+	echo "usage: sh deploy_hadoop.sh [nodes] [pagerank iterations]"
+	echo "for example: sh deploy_hadoop.sh node105,node106,node107 10"
 	echo ""
 	exit 1
 fi
@@ -14,6 +14,17 @@ fi
 #wget -O /var/scratch/$USER/hadoop-2.7.0.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz && \
 #tar -zxf /var/scratch/$USER/hadoop-2.7.0.tar.gz -C /var/scratch/$USER && mv /var/scratch/$USER/hadoop-2.7.0 /var/scratch/$USER/hadoop
 #rm /var/scratch/$USER/hadoop-2.7.0.tar.gz
+
+echo "Deploying hadoop on ${1}"
+nodes=${1}
+IFS=',' read -ra node_list <<< "$nodes"; unset IFS
+master=${node_list[0]}
+worker=${node_list[@]:1}
+echo "master is "$master
+echo "worker is "$worker
+
+# Originally slaves only contains 'localhost'
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_xml_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
 mkdir -p /var/scratch/$USER/hadoop_hdfs
 mkdir -p /var/scratch/$USER/hadoop_hdfs/namenode
@@ -46,9 +57,9 @@ jar -cf it/pagerank.jar it/
 cd ..
 start_time=$(date +%s.%N)
 
-hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${1}
+hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${2}
 end_time=$(date +%s.%N)
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
 DIFF=$(echo "$end_time - $start_time" | bc)
-echo "Elapsed time for ${1} iteration(s): $DIFF seconds"
+echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
