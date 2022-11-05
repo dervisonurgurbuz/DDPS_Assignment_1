@@ -69,9 +69,9 @@ hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank 
 end_time=$(date +%s.%N)
 DIFF=$(echo "$end_time - $start_time" | bc)
 
-# Remove folders in hdfs after use.
-hadoop fs -rm -r /input
-hadoop fs -rm -r /output
+# # Remove folders in hdfs after use.
+# hadoop fs -rm -r /input
+# hadoop fs -rm -r /output
 
 # Stop daemons & yarn
 stop-all.sh
