@@ -50,5 +50,5 @@ hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank 
 end_time=$(date +%s.%N)
 hadoop fs -rm -r /input
 hadoop fs -rm -r /output
-DIFF=$(echo "$start_time - $end_time" | bc)
+DIFF=$(echo "$end_time - $start_time" | bc)
 echo "Elapsed time for ${1} iterations: $DIFF seconds"
