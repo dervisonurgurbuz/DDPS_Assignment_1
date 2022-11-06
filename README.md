@@ -30,7 +30,7 @@ pip install --user pandas
     ```console
     source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
     ```
-
+    e.g.:
     ```console
     source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
     ```
@@ -87,7 +87,7 @@ pip install --user pandas
     ```console 
     hdfs namenode -format -clusterID <clusterID>
     ```
-    Personal clusterID used:
+    e.g.:
     ```console 
     hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
@@ -102,6 +102,7 @@ pip install --user pandas
     ```console 
     source deploy_hadoop.sh [nodes] [pagerank iterations]
     ```
+    e.g.:
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
