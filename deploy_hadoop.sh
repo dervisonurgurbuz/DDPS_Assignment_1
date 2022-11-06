@@ -4,8 +4,8 @@ set -e
 
 if [[ $# -lt 1 ]] ; then
 	echo ""
-	echo "usage: sh deploy_hadoop.sh [nodes] [pagerank iterations]"
-	echo "for example: sh deploy_hadoop.sh node105,node106,node107 10"
+	echo "usage: source deploy_hadoop.sh [nodes] [pagerank iterations]"
+	echo "for example: source deploy_hadoop.sh node105,node106,node107 10"
 	echo ""
 	exit 1
 fi
