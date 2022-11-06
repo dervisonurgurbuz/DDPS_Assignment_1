@@ -25,10 +25,10 @@ spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 # The path can be either a single text file or a directory of text files
 
 # Path for das5
-# path = "../../../../home/ddps2202/DDPS_Assignment_1/Files"
+path = "../../../../home/ddps2202/DDPS_Assignment_1/Files"
 
 # Path local trial
-path = "./Files"
+# path = "./Files"
 
 df = spark.read.text(path)
 print("Total data row number: ", df.count())
