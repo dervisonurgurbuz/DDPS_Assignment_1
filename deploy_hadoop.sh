@@ -117,7 +117,7 @@ stop-yarn.sh
 
 # Print results
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
-cd hadoop_results
-touch pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
+echo pwd
+cd DDPS_Assignment_1
+touch hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
 echo $DIFF > hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
-cd ..
