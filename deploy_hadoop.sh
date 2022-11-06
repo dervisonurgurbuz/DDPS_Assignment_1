@@ -48,7 +48,6 @@ cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
 save -
 EOF
-)
 
 # cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 # cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
