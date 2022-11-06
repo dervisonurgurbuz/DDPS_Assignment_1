@@ -92,6 +92,11 @@ pip install --user pandas
     hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
 
+    (optional) uncomment the command that loads the datasets into the hdfs:
+    ```console 
+    hadoop fs -put -f datasets/soc-Epinions1.txt /input
+    ```
+
     usage: 
 
     ```console 
@@ -100,4 +105,5 @@ pip install --user pandas
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
-3.3 (optional) 
+    (optional) outcomment all commands above again.
+    Times for pagerank will be available in the folder: hadoop_results
