@@ -47,6 +47,7 @@ xml=$(xmllint --shell <(echo "${core}") << EOF
 cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
 save -
+)
 EOF
 
 # cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
