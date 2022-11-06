@@ -17,7 +17,7 @@ export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2;
 export PATH=${JAVA_HOME}/bin:${PATH};
 alias java="$JAVA_HOME/bin/java"
 
-#SPARK and HADOOP
+#SPARKHADOOP
 export SPARK_HOME=/var/scratch/$USER/spark;
 export HADOOP_HOME=/var/scratch/$USER/hadoop;
 export PATH=${SPARK_HOME}/bin:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:${PATH};
