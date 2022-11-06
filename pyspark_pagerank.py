@@ -48,7 +48,6 @@ def parseNeighbors(urls: str) -> Tuple[str, str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: pagerank <file> <iterations>", file=sys.stderr)
         sys.exit(-1)
 
     print("WARN: This is a naive implementation of PageRank and is given as an example!\n" +
@@ -68,6 +67,7 @@ if __name__ == "__main__":
     #     ...
 
     if (sys.argv[2] == "datasets/soc-Epinions1.txt") :
+      print("testtt")
       sep = '\t'
     elif (sys.argv[2] == "datasets/wiki-topcats.txt") :
       sep = ' '
