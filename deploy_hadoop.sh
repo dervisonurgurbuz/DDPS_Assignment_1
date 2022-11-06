@@ -65,7 +65,7 @@ EOF
 
 xmllint --shell ${xml_file} << EOF
 cd /configuration/property[name='yarn.resourcemanager.address']/value
-set ${master}
+set ${master}:8032
 save
 EOF
 
