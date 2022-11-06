@@ -15,8 +15,17 @@ pip install --user pandas
 
 2. Run spark (from front-end):
 
-	usage: source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
-	for example: source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
+	usage: 
+    
+    ```console
+    source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
+    ```
+
+	for example: 
+
+    ```console
+    source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
+    ```
 
 2.1 (optional) uncomment commands in deploy_spark.sh to download spark and java on /var/scratch/$USER
 
@@ -24,8 +33,16 @@ pip install --user pandas
 
 3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
 
-    usage: source deploy_hadoop.sh [nodes] [pagerank iterations]
-    for example: source deploy_hadoop.sh node105,node106,node107 10
+    usage: 
+
+    ```console 
+    source deploy_hadoop.sh [nodes] [pagerank iterations]
+    ```
+     
+    for example: 
+    ```console
+    source deploy_hadoop.sh node105,node106,node107 10
+    ```
 
 3.1 (optional) uncomment commands in deploy_hadoop.sh to: download hadoop; to set environment variables in mapred-env.sh, hadoop-env.sh and yarn-env.sh; create folders for datanode and namenodes; download pagerank for hadoop.
 
