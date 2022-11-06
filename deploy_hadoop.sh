@@ -27,11 +27,11 @@ echo "worker is "$worker
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 
 # Create namenode and datanode directories
-rm -rf /var/scratch/$USER/hadoop_hdfs
-mkdir -p /var/scratch/$USER/hadoop_hdfs
-mkdir -p /var/scratch/$USER/hadoop_hdfs/namenode
-mkdir -p /var/scratch/$USER/hadoop_hdfs/datanode
-mkdir -p /var/scratch/$USER/hadoop_hdfs/temp
+rm -rf /var/scratch/$USER/hadoop/hdfs
+mkdir -p /var/scratch/$USER/hadoop/hdfs
+mkdir -p /var/scratch/$USER/hadoop/hdfs/namenode
+mkdir -p /var/scratch/$USER/hadoop/hdfs/datanode
+mkdir -p /var/scratch/$USER/hadoop/hdfs/temp
 
 # Copy configuration files to hadoop folder
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
