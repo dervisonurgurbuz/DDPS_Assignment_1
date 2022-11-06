@@ -51,6 +51,9 @@ cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scra
 start-dfs.sh
 start-yarn.sh
 
+# Turn off safemode 
+hdfs dfsadmin -safemode leave
+
 ######################## UNCOMMENT AND RUN ONCE ################################################
 # # Format namenode 
 # hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
