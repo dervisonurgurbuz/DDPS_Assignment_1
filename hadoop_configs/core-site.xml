@@ -21,5 +21,4 @@
     <name>fs.defaultFS</name>
     <value>hdfs://0.0.0.0:9000</value>
 </property>
-<property>
 </configuration>
