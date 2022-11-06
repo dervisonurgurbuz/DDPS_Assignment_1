@@ -98,8 +98,8 @@ hdfs dfsadmin -safemode leave
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
 # # Create input and output directories on hdfs
-# hadoop fs -mkdir -p /input
-# hadoop fs -mkdir -p /output
+hadoop fs -mkdir -p /input
+hadoop fs -mkdir -p /output
 # hadoop fs -put -f datasets/soc-Epinions1.txt /input
 #################################################################################################
 
@@ -116,4 +116,4 @@ stop-yarn.sh
 
 # Print results
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
-echo $DIFF >> hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
+echo $DIFF > hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
