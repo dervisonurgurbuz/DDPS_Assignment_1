@@ -48,10 +48,10 @@ set ${host}
 save
 EOF
 
-echo "$master\n" > /var/scratch/$USER/hadoop/etc/hadoop/workers
+echo "$master" > /var/scratch/$USER/hadoop/etc/hadoop/workers
 for i in $worker 
 do
-	echo "$i\n" >> /var/scratch/$USER/hadoop/etc/hadoop/workers
+	echo "$i" >> /var/scratch/$USER/hadoop/etc/hadoop/workers
 done
 # # Copy configuration files to hadoop folder
 # # Originally, slaves only contains 'localhost'
