@@ -1,6 +1,6 @@
 wikipedia
 *.png
 env
-*.txt
+datasets/*
 *.gz
 !word_count_data.txt
