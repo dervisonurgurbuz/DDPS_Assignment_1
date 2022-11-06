@@ -26,7 +26,14 @@ pip install --user pandas
     ```
 
 (optional) uncomment commands in deploy_spark.sh to download spark and java on /var/scratch/$USER
-
+```console
+wget -O /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz && \
+tar -xf /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7 /var/scratch/$USER/spark
+wget -O /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz && \
+tar -zxf /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz -C /var/scratch/$USER
+rm /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz
+rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
+```
 2. The computing time per iteration will be stored in the npy_files folder
 
 3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
