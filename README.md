@@ -45,7 +45,7 @@ pip install --user pandas
     # rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
     ```
 
-2. The computing time per iteration will be stored in the npy_files folder
+    The computing time per iteration will be stored in the npy_files folder
 
 3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
 
@@ -58,7 +58,35 @@ pip install --user pandas
     source deploy_hadoop.sh node105,node106,node107 10
     ```
 
-    (optional) uncomment commands in deploy_hadoop.sh to: download hadoop; to set environment variables in mapred-env.sh, hadoop-env.sh and yarn-env.sh; create folders for datanode and namenodes; download pagerank for hadoop.
+    (optional) uncomment the following lines in deploy_hadoop.sh to: download hadoop; to set environment variables in mapred-env.sh, hadoop-env.sh and yarn-env.sh; create folders for datanode and namenodes; download pagerank for hadoop.
+    ```console 
+    # Download hadoop
+    curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
+    wget -O /var/scratch/$USER/hadoop-2.7.0.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz && \
+    tar -zxf /var/scratch/$USER/hadoop-2.7.0.tar.gz -C /var/scratch/$USER && mv /var/scratch/$USER/hadoop-2.7.0 /var/scratch/$USER/hadoop
+    rm /var/scratch/$USER/hadoop-2.7.0.tar.gz
+
+    # Set environment variables
+    cd /var/scratch/$USER/hadoop/etc/hadoop
+    echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
+    echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
+    echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
+    cd /var/scratch/$USER/DDPS_Assignment_1
+
+    # Create namenode and datanode directories
+    mkdir /var/scratch/$USER/hadoop/dfs
+    mkdir /var/scratch/$USER/hadoop/dfs/namenode
+    mkdir /var/scratch/$USER/hadoop/dfs/datanode
+    mkdir /var/scratch/$USER/hadoop/dfs/temp
+
+    # Download pagerank for hadoop implementation
+    cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
+
+    # Compile pagerank code, then turn to jar file.
+    javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
+    jar -cf it/pagerank.jar it/
+    cd ../DDPS_Assignment_1
+    ```
 
     (optional) uncomment commands in deploy_hadoop.sh to format namenode.
     usage: hdfs namenode -format
