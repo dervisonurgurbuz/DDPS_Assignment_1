@@ -65,7 +65,7 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     URL         neighbor URL
     #     ...
-
+    print(sys.argv[2])
     if (sys.argv[2] == "datasets/soc-Epinions1.txt") :
       print("testtt")
       sep = '\t'
