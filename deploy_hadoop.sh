@@ -39,12 +39,33 @@ worker=${node_list[@]:1}
 echo "master is "$master
 echo "worker is "$worker
 
+# Copy configuration files to hadoop folder
+# Originally, slaves only contains 'localhost'
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
+
 # Set config files
 host="hdfs://${master}:9000"
-core="/var/scratch/$USER/hadoop/etc/hadoop/core-site.xml"
-xmllint --shell ${core} << EOF
+xml_file="/var/scratch/$USER/hadoop/etc/hadoop/core-site.xml"
+xmllint --shell ${xml_file} << EOF
 cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
+save
+EOF
+
+xml_file="/var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml"
+xmllint --shell ${xml_file} << EOF
+cd /configuration/property[name='yarn.resourcemanager.hostname']/value
+set ${master}
+save
+EOF
+
+xmllint --shell ${xml_file} << EOF
+cd /configuration/property[name='yarn.resourcemanager.address']/value
+set ${master}
 save
 EOF
 
@@ -53,12 +74,6 @@ for i in $worker
 do
 	echo "$i" >> /var/scratch/$USER/hadoop/etc/hadoop/workers
 done
-# # Copy configuration files to hadoop folder
-# # Originally, slaves only contains 'localhost'
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
 # # Start hadoop DFS daemons and yarn 
 # start-dfs.sh
