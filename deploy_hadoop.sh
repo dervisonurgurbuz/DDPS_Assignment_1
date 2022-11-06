@@ -60,7 +60,7 @@ start-yarn.sh
 # hadoop fs -mkdir -p /output
 # hadoop fs -put -f datasets/soc-Epinions1.txt /input
 
-Download pagerank for hadoop implementation
+# Download pagerank for hadoop implementation
 cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
 
 # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
