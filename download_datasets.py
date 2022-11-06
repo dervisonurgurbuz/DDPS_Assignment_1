@@ -30,3 +30,4 @@ open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'wb
 with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'rb') as f_in:
     with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
+os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz')
