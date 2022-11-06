@@ -48,7 +48,7 @@ set ${host}
 save
 EOF
 
-echo "$worker" > /var/scratch/$USER/hadoop/etc/hadoop/workers
+echo "$master $worker" > /var/scratch/$USER/hadoop/etc/hadoop/workers
 # # Copy configuration files to hadoop folder
 # # Originally, slaves only contains 'localhost'
 # cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
