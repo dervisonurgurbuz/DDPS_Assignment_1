@@ -7,7 +7,7 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('This is just a beginning :)')
+    print_hi('Resilient Distributed Datasets, Interactive Data Mining :)')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 import time
@@ -34,9 +34,6 @@ df = spark.read.text(path)
 
 print("Total data row number")
 print(len(df.collect()))
-
-
-
 
 split_col = pyspark.sql.functions.split(df['value'], ' ')
 df3 = df.select(split_col.getItem(0).alias('platform'), split_col.getItem(1).alias('page_title'),
@@ -82,45 +79,49 @@ def exactmatch(search, df3):
     df7.show()
 
 
-
 def partiallymatch(search, df3):
-    search = "%"+search+"%"
+    search = "%" + search + "%"
     df8 = df3.select("page_title", df3.page_title.like(search))
     df8.show()
 
 
+# Extra calculating page view per page
+# name = ''
+# for x in range(0, len(rowList)):
+#
+#     name = str(rowList[x].__getitem__('page_title'))
+#
+#     df6 = search_df.filter(search_df["page_title"] == name)
+#
+#     if len(df6.collect()) == 0:
+#         print("Searching views for:")
+#         print(name, "\n")
+#         search_df = findtotalviews(name, df3, search_df)
+
 st2 = time.time()
-# Part 1 Main Iterative Implementation
+# Part 1 Calculating total views of all pages
 view = 0
 for x in range(0, len(rowList)):
     view += int(rowList[x].__getitem__('views'))
-
-
-    # df6 = search_df.filter(search_df["page_title"] == name)
-    #
-    # if len(df6.collect()) == 0:
-    #     print("Searching views for:")
-    #     print(name, "\n")
-    #     search_df = findtotalviews(name, df3, search_df)
-
-print("Hear is the total view: ",view)
+print("Total view of all pages: ", view)
 
 et1 = time.time()
 # Part 2 Execution
 print("Exactly Match")
-exactmatch("Siren", df3)
+name = "Siren"
+exactmatch(name, df3)
 et2 = time.time()
 
 # Part 3 Execution
 print("Partially Match")
-partiallymatch("Sjabloon", df3)
+name = "Sjabloon"
+partiallymatch(name, df3)
 et3 = time.time()
 
-
 total_compile_time = et3 - st
-dataframe_compile_time = st2-st
-part3_compile_time = et3-et2
-part2_compile_time = et2-et1
+dataframe_compile_time = st2 - st
+part3_compile_time = et3 - et2
+part2_compile_time = et2 - et1
 part1_compile_time = et1 - st2
 
 print('Total Execution time:', total_compile_time, 'seconds')
