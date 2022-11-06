@@ -71,6 +71,8 @@ if __name__ == "__main__":
       sep = '\t'
     elif (sys.argv[2] == "datasets/wiki-topcats.txt") :
       sep = ' '
+    else :
+      sep = ','
     lines = spark.read.text(sys.argv[1],lineSep=sep).rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
