@@ -78,10 +78,10 @@ set ${master}:8032
 save
 EOF
 
-echo "$master" > /var/scratch/$USER/hadoop/etc/hadoop/workers
+echo "$master" > /var/scratch/$USER/hadoop/etc/hadoop/slaves
 for i in $worker 
 do
-	echo "$i" >> /var/scratch/$USER/hadoop/etc/hadoop/workers
+	echo "$i" >> /var/scratch/$USER/hadoop/etc/hadoop/slaves
 done
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
@@ -97,10 +97,10 @@ start-yarn.sh
 hdfs dfsadmin -safemode leave
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
-# Create input and output directories on hdfs
-hadoop fs -mkdir -p /input
-hadoop fs -mkdir -p /output
-hadoop fs -put -f datasets/soc-Epinions1.txt /input
+# # Create input and output directories on hdfs
+# hadoop fs -mkdir -p /input
+# hadoop fs -mkdir -p /output
+# hadoop fs -put -f datasets/soc-Epinions1.txt /input
 #################################################################################################
 
 # # Run hadoop and pagerank, and track time.
