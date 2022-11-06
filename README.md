@@ -7,7 +7,7 @@
 python download_datasets.py
 ```
 
-1.1 (optional) you might need to download python libraries (download as --user in ~/ to avoid requiring any special privileges). e.g., by running 
+(optional) you might need to download python libraries (download as --user in ~/ to avoid requiring any special privileges). e.g., by running 
 
 ```console
 pip install --user pandas
@@ -21,15 +21,13 @@ pip install --user pandas
     source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
     ```
 
-	for example: 
-
     ```console
     source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
     ```
 
-2.1 (optional) uncomment commands in deploy_spark.sh to download spark and java on /var/scratch/$USER
+(optional) uncomment commands in deploy_spark.sh to download spark and java on /var/scratch/$USER
 
-2.2 The computing time per iteration will be stored in the npy_files folder
+2. The computing time per iteration will be stored in the npy_files folder
 
 3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
 
@@ -38,8 +36,6 @@ pip install --user pandas
     ```console 
     source deploy_hadoop.sh [nodes] [pagerank iterations]
     ```
-     
-    for example: 
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
