@@ -41,7 +41,7 @@ pip install --user pandas
 
 3. Run hadoop (from master node (SSH TO IT FIRST))(only works for soc-Epinions1.txt dataset):
 
-    (do once) uncomment the following lines in deploy_hadoop.sh:
+    (do once) Uncomment the following lines in deploy_hadoop.sh:
     ```console 
     # Download hadoop
     curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
@@ -70,26 +70,11 @@ pip install --user pandas
     jar -cf it/pagerank.jar it/
     cd ../DDPS_Assignment_1
     ```
-
     
     (do once) Uncomment the following command in deploy_hadoop.sh to format namenode.
-    usage: 
+
     ```console
     hdfs namenode -format
-    ```
-
-    When start-dfs.sh does not create a live datanode and live namenode, the clusterID of the namenode might not match the datanode. Check with command:
-    ```console 
-    jps
-    ```
-    If clusterID of the namenode does not match the datanode, run format again with clusterID specified:
-    
-    ```console 
-    hdfs namenode -format -clusterID <clusterID>
-    ```
-    e.g.:
-    ```console 
-    hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
 
     (do once) Uncomment the command that loads the datasets into the hdfs:
@@ -106,6 +91,21 @@ pip install --user pandas
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
+
+    When start-dfs.sh does not create a live datanode and live namenode, the clusterID of the namenode might not match the datanode. Check with command:
+    ```console 
+    jps
+    ```
+    If clusterID of the namenode does not match the datanode, run format again with clusterID specified:
+    
+    ```console 
+    hdfs namenode -format -clusterID <clusterID>
+    ```
+    e.g.:
+    ```console 
+    hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
+    ```
+
     (do once) Outcomment all mentioned commands again.
 
     Times for pagerank will be available in the folder: hadoop_results
