@@ -7,7 +7,7 @@
 python download_datasets.py
 ```
 
-(optional) you might need to download python libraries (download as --user in ~/ to avoid requiring any special privileges). e.g., by running 
+(optional) You might need to download python libraries (download as --user in ~/ to avoid requiring any special privileges). e.g., by running 
 
 ```console
 pip install --user pandas
@@ -15,7 +15,7 @@ pip install --user pandas
 
 2. Run spark (from front-end):
 
-    (do once) uncomment the following lines in deploy_spark.sh to download spark and java on /var/scratch/$USER.
+    (do once) Uncomment the following lines in deploy_spark.sh to download spark and java on /var/scratch/$USER.
     ```console
     wget -O /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz && \
     tar -xf /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7 /var/scratch/$USER/spark
@@ -25,7 +25,7 @@ pip install --user pandas
     rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
     ```
 
-	usage: 
+	Usage: 
     
     ```console
     source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
@@ -35,7 +35,7 @@ pip install --user pandas
     source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
     ```
 
-    (do once) comment out the commands again.
+    (do once) Comment out the commands again.
 
     The computing time per iteration will be stored in the npy_files folder
 
@@ -72,13 +72,13 @@ pip install --user pandas
     ```
 
     
-    (do once) uncomment commands in deploy_hadoop.sh to format namenode.
+    (do once) Uncomment the following command in deploy_hadoop.sh to format namenode.
     usage: 
     ```console
     hdfs namenode -format
     ```
 
-    when start-dfs.sh does not create a live datanode and live namenode, the clusterID of the namenode might not match the datanode. Check with command:
+    When start-dfs.sh does not create a live datanode and live namenode, the clusterID of the namenode might not match the datanode. Check with command:
     ```console 
     jps
     ```
@@ -92,12 +92,12 @@ pip install --user pandas
     hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
 
-    (do once) uncomment the command that loads the datasets into the hdfs:
+    (do once) Uncomment the command that loads the datasets into the hdfs:
     ```console 
     hadoop fs -put -f datasets/soc-Epinions1.txt /input
     ```
 
-    usage: 
+    Usage: 
 
     ```console 
     source deploy_hadoop.sh [nodes] [pagerank iterations]
@@ -105,7 +105,7 @@ pip install --user pandas
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
-    (do once) outcomment all commands above again.
+    (do once) Outcomment all commands above again.
     Times for pagerank will be available in the folder: hadoop_results
 
 3. (optional) Plot results with plotting.py
