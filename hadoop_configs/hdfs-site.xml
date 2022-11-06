@@ -23,10 +23,10 @@
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>dfs/namenode </value>
+    <value>${HADOOP_HOME}/dfs/namenode </value>
   </property>
   <property>
     <name>dfs.datanode.name.dir</name> 
-    <value>dfs/datanode </value> 
+    <value>${HADOOP_HOME}/dfs/datanode </value> 
   </property>
 </configuration>
