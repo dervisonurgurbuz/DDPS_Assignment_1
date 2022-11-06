@@ -15,7 +15,7 @@ pip install --user pandas
 
 2. Run spark (from front-end):
 
-    (optional) uncomment the following lines in deploy_spark.sh to download spark and java on /var/scratch/$USER.
+    (do once) uncomment the following lines in deploy_spark.sh to download spark and java on /var/scratch/$USER.
     ```console
     wget -O /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz && \
     tar -xf /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7 /var/scratch/$USER/spark
@@ -35,13 +35,13 @@ pip install --user pandas
     source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
     ```
 
-    (optional) comment out the commands again.
+    (do once) comment out the commands again.
 
     The computing time per iteration will be stored in the npy_files folder
 
 3. Run hadoop (from master node (SSH TO IT FIRST))(only works for soc-Epinions1.txt dataset):
 
-    (optional) uncomment the following lines in deploy_hadoop.sh
+    (do once) uncomment the following lines in deploy_hadoop.sh
     ```console 
     # Download hadoop
     curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
@@ -72,7 +72,7 @@ pip install --user pandas
     ```
 
     
-    (optional) uncomment commands in deploy_hadoop.sh to format namenode.
+    (do once) uncomment commands in deploy_hadoop.sh to format namenode.
     usage: 
     ```console
     hdfs namenode -format
@@ -92,7 +92,7 @@ pip install --user pandas
     hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
 
-    (optional) uncomment the command that loads the datasets into the hdfs:
+    (do once) uncomment the command that loads the datasets into the hdfs:
     ```console 
     hadoop fs -put -f datasets/soc-Epinions1.txt /input
     ```
@@ -105,5 +105,7 @@ pip install --user pandas
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
-    (optional) outcomment all commands above again.
+    (do once) outcomment all commands above again.
     Times for pagerank will be available in the folder: hadoop_results
+
+3. (optional) Plot results with plotting.py
