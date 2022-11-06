@@ -50,6 +50,9 @@ worker=${node_list[@]:1}
 echo "master is "$master
 echo "worker is "$worker
 
+ssh ${master} << 'EOL'
+cd /var/scratch/$USER/DDPS_Assignment_1
+
 # Copy configuration files to hadoop folder
 # Originally, slaves only contains 'localhost'
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
@@ -58,7 +61,7 @@ cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratc
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
-# Set config files
+# Set config files based on master node and worker nodes
 host="hdfs://${master}:9000"
 xml_file="/var/scratch/$USER/hadoop/etc/hadoop/core-site.xml"
 xmllint --shell ${xml_file} << EOF
@@ -66,20 +69,17 @@ cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
 save
 EOF
-
 xml_file="/var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml"
 xmllint --shell ${xml_file} << EOF
 cd /configuration/property[name='yarn.resourcemanager.hostname']/value
 set ${master}
 save
 EOF
-
 xmllint --shell ${xml_file} << EOF
 cd /configuration/property[name='yarn.resourcemanager.address']/value
 set ${master}:8032
 save
 EOF
-
 echo "$master" > /var/scratch/$USER/hadoop/etc/hadoop/slaves
 for i in $worker 
 do
@@ -122,3 +122,4 @@ echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
 cd DDPS_Assignment_1
 touch hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
 echo $DIFF > hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
+EOL
