@@ -43,11 +43,17 @@ echo "worker is "$worker
 # Originally, slaves only contains 'localhost'
 host="hdfs://${master}:9000"
 core="/var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml"
-xml=$(xmllint --shell <(echo "${core}") << EOF
+# xml=$(xmllint --shell <(echo "${core}") << EOF
+# cd /configuration/property[name='fs.defaultFS']/value
+# set ${host}
+# save -
+# EOF
+# )
+
+xmllint --shell ${core} << EOF
 cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
-save -
-)
+save
 EOF
 
 # cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
