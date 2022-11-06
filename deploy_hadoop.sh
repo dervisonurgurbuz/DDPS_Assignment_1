@@ -41,7 +41,7 @@ echo "worker is "$worker
 
 # Set config files
 host="hdfs://${master}:9000"
-core="/var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml"
+core="/var/scratch/$USER/hadoop/etc/hadoop/core-site.xml"
 xmllint --shell ${core} << EOF
 cd /configuration/property[name='fs.defaultFS']/value
 set ${host}
@@ -52,7 +52,6 @@ EOF
 # Originally, slaves only contains 'localhost'
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
