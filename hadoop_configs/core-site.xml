@@ -22,7 +22,4 @@
     <value>hdfs://0.0.0.0:9000</value>
 </property>
 <property>
-<!-- <name>hadoop.tmp.dir</name>
-<value>file://${hadoop.tmp.dir}/dfs/data</value>
-</property> -->
 </configuration>
