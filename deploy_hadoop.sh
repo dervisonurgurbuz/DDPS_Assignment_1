@@ -4,6 +4,7 @@ set -e
 
 if [[ $# -lt 1 ]] ; then
 	echo ""
+	echo "Run this from masternode (NOT front-end)"
 	echo "usage: source deploy_hadoop.sh [nodes] [pagerank iterations]"
 	echo "for example: source deploy_hadoop.sh node105,node106,node107 10"
 	echo ""
@@ -49,9 +50,6 @@ master=${node_list[0]}
 worker=${node_list[@]:1}
 echo "master is "$master
 echo "worker is "$worker
-
-ssh ${master} << 'EOL'
-cd /var/scratch/$USER/DDPS_Assignment_1
 
 # Copy configuration files to hadoop folder
 # Originally, slaves only contains 'localhost'
@@ -122,4 +120,3 @@ echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
 cd DDPS_Assignment_1
 touch hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
 echo $DIFF > hadoop_results/pagerank_iterations_${2}_nodes_${#node_list[@]}.txt
-EOL
