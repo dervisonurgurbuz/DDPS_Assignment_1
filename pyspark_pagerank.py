@@ -66,7 +66,12 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     URL         neighbor URL
     #     ...
-    lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
+
+    if (sys.argv[2] == "datasets/soc-Epinions1.txt") :
+      sep = '\t'
+    elif (sys.argv[2] == "datasets/wiki-topcats.txt") :
+      sep = ' '
+    lines = spark.read.text(sys.argv[1],lineSep=sep).rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
@@ -96,5 +101,5 @@ if __name__ == "__main__":
       
     spark.stop()
     nodeCount = sys.argv[3]
-    filename = sys.argv[2].split('/')[1].split('.')[0]
+    filename = sys.argv[2].split('/')[-1].split('.')[0]
     np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
