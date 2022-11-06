@@ -35,21 +35,13 @@ pip install --user pandas
     source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10
     ```
 
-    (optional) comment out again following commands.
-    ```console
-    # wget -O /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz && \
-    # tar -xf /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7 /var/scratch/$USER/spark
-    # wget -O /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz && \
-    # tar -zxf /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz -C /var/scratch/$USER
-    # rm /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz
-    # rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
-    ```
+    (optional) comment out the commands again.
 
     The computing time per iteration will be stored in the npy_files folder
 
 3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
 
-    (optional) uncomment the following lines in deploy_hadoop.sh to: download hadoop; to set environment variables in mapred-env.sh, hadoop-env.sh and yarn-env.sh; create folders for datanode and namenodes; download pagerank for hadoop.
+    (optional) uncomment the following lines in deploy_hadoop.sh
     ```console 
     # Download hadoop
     curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
