@@ -25,10 +25,10 @@ fi
 # cd /var/scratch/$USER/DDPS_Assignment_1
 
 # # Create namenode and datanode directories
-# mkdir /var/scratch/$USER/hadoop/hdfs
-# mkdir /var/scratch/$USER/hadoop/hdfs/namenode
-# mkdir /var/scratch/$USER/hadoop/hdfs/datanode
-# mkdir /var/scratch/$USER/hadoop/hdfs/temp
+# mkdir /var/scratch/$USER/hadoop/dfs
+# mkdir /var/scratch/$USER/hadoop/dfs/namenode
+# mkdir /var/scratch/$USER/hadoop/dfs/datanode
+# mkdir /var/scratch/$USER/hadoop/dfs/temp
 
 # Format namenode 
 # hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
@@ -56,9 +56,9 @@ start-yarn.sh
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
 # # Create input and output directories on hdfs
-# hadoop fs -mkdir -p /input
-# hadoop fs -mkdir -p /output
-# hadoop fs -put -f datasets/soc-Epinions1.txt /input
+hadoop fs -mkdir -p /input
+hadoop fs -mkdir -p /output
+hadoop fs -put -f datasets/soc-Epinions1.txt /input
 
 # Download pagerank for hadoop implementation
 # cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
