@@ -29,6 +29,15 @@ fi
 # mkdir /var/scratch/$USER/hadoop/dfs/namenode
 # mkdir /var/scratch/$USER/hadoop/dfs/datanode
 # mkdir /var/scratch/$USER/hadoop/dfs/temp
+
+# Download pagerank for hadoop implementation
+# cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
+
+# # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
+# # Compile pagerank code, then turn to jar file.
+# javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
+# jar -cf it/pagerank.jar it/
+# cd ../DDPS_Assignment_1
 #################################################################################################
 
 echo "Deploying hadoop on ${1}"
@@ -75,6 +84,11 @@ do
 	echo "$i" >> /var/scratch/$USER/hadoop/etc/hadoop/workers
 done
 
+######################## UNCOMMENT AND RUN ONCE ################################################
+# # Format namenode 
+# hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
+#################################################################################################
+
 # Start hadoop DFS daemons and yarn 
 start-dfs.sh
 start-yarn.sh
@@ -83,21 +97,10 @@ start-yarn.sh
 hdfs dfsadmin -safemode leave
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
-# # Format namenode 
-# hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
-# # Create input and output directories on hdfs
-# hadoop fs -mkdir -p /input
-# hadoop fs -mkdir -p /output
-# hadoop fs -put -f datasets/soc-Epinions1.txt /input
-
-# Download pagerank for hadoop implementation
-# cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
-
-# # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
-# # Compile pagerank code, then turn to jar file.
-# javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
-# jar -cf it/pagerank.jar it/
-# cd ..
+# Create input and output directories on hdfs
+hadoop fs -mkdir -p /input
+hadoop fs -mkdir -p /output
+hadoop fs -put -f datasets/soc-Epinions1.txt /input
 #################################################################################################
 
 # # Run hadoop and pagerank, and track time.
