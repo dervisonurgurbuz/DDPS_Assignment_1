@@ -31,9 +31,7 @@ path = "../../../../home/ddps2202/DDPS_Assignment_1/Files"
 # path = "./Files"
 
 df = spark.read.text(path)
-
-print("Total data row number")
-print(len(df.collect()))
+print("Total data row number: ", len(df.collect()))
 
 split_col = pyspark.sql.functions.split(df['value'], ' ')
 df3 = df.select(split_col.getItem(0).alias('platform'), split_col.getItem(1).alias('page_title'),
