@@ -41,47 +41,56 @@ echo "worker is "$worker
 
 # Copy configuration files to hadoop folder
 # Originally, slaves only contains 'localhost'
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
-cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
+host="hdfs://${master}:9000"
+core="/var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml"
+xml=$(xmllint --shell <(echo "${core}") << EOF
+cd /configuration/property[name='fs.defaultFS']/value
+set ${host}
+save -
+EOF
+)
 
-# Start hadoop DFS daemons and yarn 
-start-dfs.sh
-start-yarn.sh
+# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
+# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
+# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
+# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
+# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
-# Turn off safemode 
-hdfs dfsadmin -safemode leave
+# # Start hadoop DFS daemons and yarn 
+# start-dfs.sh
+# start-yarn.sh
 
-######################## UNCOMMENT AND RUN ONCE ################################################
-# # Format namenode 
-# hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
-# # Create input and output directories on hdfs
-# hadoop fs -mkdir -p /input
-# hadoop fs -mkdir -p /output
-# hadoop fs -put -f datasets/soc-Epinions1.txt /input
+# # Turn off safemode 
+# hdfs dfsadmin -safemode leave
 
-# Download pagerank for hadoop implementation
-# cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
+# ######################## UNCOMMENT AND RUN ONCE ################################################
+# # # Format namenode 
+# # hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
+# # # Create input and output directories on hdfs
+# # hadoop fs -mkdir -p /input
+# # hadoop fs -mkdir -p /output
+# # hadoop fs -put -f datasets/soc-Epinions1.txt /input
 
-# # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
-# # Compile pagerank code, then turn to jar file.
-# javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
-# jar -cf it/pagerank.jar it/
+# # Download pagerank for hadoop implementation
+# # cd .. && git clone https://github.com/danielepantaleone/hadoop-pagerank.git || true && cd hadoop-pagerank
+
+# # # Inspiration: https://stackoverflow.com/questions/49951114/java-class-not-found-for-pagerank-algorithm-in-apache-hadoop
+# # # Compile pagerank code, then turn to jar file.
+# # javac -classpath ${HADOOP_CLASSPATH} -d ./ src/it/uniroma1/hadoop/pagerank/PageRank.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Mapper.java src/it/uniroma1/hadoop/pagerank/job1/PageRankJob1Reducer.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Mapper.java src/it/uniroma1/hadoop/pagerank/job2/PageRankJob2Reducer.java src/it/uniroma1/hadoop/pagerank/job3/PageRankJob3Mapper.java 
+# # jar -cf it/pagerank.jar it/
+# # cd ..
+# #################################################################################################
+
+# # # Run hadoop and pagerank, and track time.
+# start_time=$(date +%s.%N)
 # cd ..
-#################################################################################################
+# hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${2}
+# end_time=$(date +%s.%N)
+# DIFF=$(echo "$end_time - $start_time" | bc)
 
-# # Run hadoop and pagerank, and track time.
-start_time=$(date +%s.%N)
-cd ..
-hadoop jar hadoop-pagerank/it/pagerank.jar it.uniroma1.hadoop.pagerank.PageRank --input /input/soc-Epinions1.txt --output /output --count ${2}
-end_time=$(date +%s.%N)
-DIFF=$(echo "$end_time - $start_time" | bc)
+# # Stop daemons & yarn
+# stop-dfs.sh
+# stop-yarn.sh
 
-# Stop daemons & yarn
-stop-dfs.sh
-stop-yarn.sh
-
-# Print results
-echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
+# # Print results
+# echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
