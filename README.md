@@ -82,14 +82,14 @@ pip install --user pandas
     ```console 
     jps
     ```
-    If clusterID of the namenode does not match the datanode, run:
+    If clusterID of the namenode does not match the datanode, run format again with clusterID specified:
     
     ```console 
-    hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
-    ```
-    or in general:
-    ```console 
     hdfs namenode -format -clusterID <clusterID>
+    ```
+    Personal clusterID used:
+    ```console 
+    hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118
     ```
 
     usage: 
