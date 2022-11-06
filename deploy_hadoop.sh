@@ -40,10 +40,11 @@ cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratc
 cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
 # Add java to hadoop environment scripts
+cd /var/scratch/$USER/hadoop/etc/hadoop
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> mapred-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> hadoop-env.sh
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> yarn-env.sh
-
+cd /var/scratch/$USER/DDPS_Assignment_1
 # Format namenode (might need manual confirmation)
 hdfs namenode -format
 
