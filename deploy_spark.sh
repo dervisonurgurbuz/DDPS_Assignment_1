@@ -28,7 +28,7 @@ echo "worker is "$worker
 #rm /var/scratch/$USER/spark-3.1.2-bin-hadoop2.7.tgz
 #rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
 
-#source export.sh
+source export.sh
 
 cd /var/scratch/$USER/spark/conf && cp spark-env.sh.template spark-env.sh && cp workers.template workers
 sleep 3
