@@ -39,7 +39,7 @@ pip install --user pandas
 
     The computing time per iteration will be stored in the npy_files folder
 
-3. Run hadoop (from master node)(only works for soc-Epinions1.txt dataset):
+3. Run hadoop (from master node (SSH TO IT FIRST))(only works for soc-Epinions1.txt dataset):
 
     (optional) uncomment the following lines in deploy_hadoop.sh
     ```console 
@@ -71,14 +71,7 @@ pip install --user pandas
     cd ../DDPS_Assignment_1
     ```
 
-    usage: 
-
-    ```console 
-    source deploy_hadoop.sh [nodes] [pagerank iterations]
-    ```
-    ```console
-    source deploy_hadoop.sh node105,node106,node107 10
-    ```
+    
     (optional) uncomment commands in deploy_hadoop.sh to format namenode.
     usage: 
     ```console
@@ -99,4 +92,12 @@ pip install --user pandas
     hdfs namenode -format -clusterID <clusterID>
     ```
 
+    usage: 
+
+    ```console 
+    source deploy_hadoop.sh [nodes] [pagerank iterations]
+    ```
+    ```console
+    source deploy_hadoop.sh node105,node106,node107 10
+    ```
 3.3 (optional) 
