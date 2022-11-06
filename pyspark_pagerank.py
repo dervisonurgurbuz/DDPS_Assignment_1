@@ -1,144 +1,100 @@
-from pyspark import SparkContext
-from pyspark.sql import SparkSession
-from pyspark.sql.types import *
-import time
-import requests
-import io
-import zipfile
-import numpy as np
-import shutil
+# Directly copied from: https://github.com/apache/spark/blob/master/examples/src/main/python/pagerank.py
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+"""
+This is an example implementation of PageRank. For more conventional use,
+Please refer to PageRank implementation provided by graphx
+Example Usage:
+bin/spark-submit examples/src/main/python/pagerank.py data/mllib/pagerank_data.txt 10
+"""
+import re
 import sys
-import gzip
-import os
+import numpy as np
+import time
+from operator import add
+from typing import Iterable, Tuple
 
-context = SparkContext()
-context.addPyFile('/var/scratch/ddps2202/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar')
+from pyspark.resultiterable import ResultIterable
+from pyspark.sql import SparkSession
 
-# local[n] defines the number of partitions. Ideally, ``it should be the number of CPU cores you have."" [*] selects maximum
-spark = SparkSession(context).builder.master("local[*]").appName('Sparktest').getOrCreate()
 
-from graphframes import *
+def computeContribs(urls: ResultIterable[str], rank: float) -> Iterable[Tuple[str, float]]:
+    """Calculates URL contributions to the rank of other URLs."""
+    num_urls = len(urls)
+    for url in urls:
+        yield (url, rank / num_urls)
 
-dataset = sys.argv[2]
-repetitions = int(sys.argv[3])
 
-# Create edgelist
-def getEdgelist (filename, spark, sep, headerValue, schema) :
-  edges = spark.read.csv(filename, schema=schema, sep=sep, header=headerValue)
-  return edges
+def parseNeighbors(urls: str) -> Tuple[str, str]:
+    """Parses a urls pair string into urls pair."""
+    parts = re.split(r'\s+', urls)
+    return parts[0], parts[1]
 
-# Create list of nodes
-def getNodes (filename, spark, sep, headerValue, schema) :
-  nodes = spark.read.csv(filename, schema=schema, sep = sep, header=headerValue)
 
-  # Only keep column with node indices
-  nodes = nodes.drop("temp")
-  return nodes
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: pagerank <file> <iterations>", file=sys.stderr)
+        sys.exit(-1)
 
-# Run PageRank algorithm, record time, and show results.
-def repetition_experiment (graphframe, repetitions) :
-  times = []
-  for i in range (repetitions) :
-    start = time.perf_counter()
-    results = graphframe.pageRank(resetProbability=0.01, maxIter=10)
-    end = time.perf_counter()
-    times.append(end-start)
-  return times
+    print("WARN: This is a naive implementation of PageRank and is given as an example!\n" +
+          "Please refer to PageRank implementation provided by graphx",
+          file=sys.stderr)
 
-if (dataset == "crocodile") :
-  # Get wikipedia dataset
-  r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
-  z = zipfile.ZipFile(io.BytesIO(r.content))
-  z.extractall("/var/scratch/ddps2202/DDPS_Assignment_1/datasets")
+    # Initialize the spark context.
+    spark = SparkSession\
+        .builder\
+        .appName("PythonPageRank")\
+        .getOrCreate()
 
-  schema = StructType([ \
-      StructField("src",StringType(),True), \
-      StructField("dst",StringType(),True), \
-    ])
-  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wikipedia/crocodile/musae_crocodile_edges.csv", spark, ',', True, schema)
-  schema = StructType([ \
-    StructField("id",StringType(),True), \
-    StructField("temp",StringType(),True), \
-  ])
-  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wikipedia/crocodile/musae_crocodile_target.csv", spark, ',', True, schema)
+    # Loads in input file. It should be in format of:
+    #     URL         neighbor URL
+    #     URL         neighbor URL
+    #     URL         neighbor URL
+    #     ...
+    lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
 
-elif (dataset == "soc-Epinions1") :
-  # Get soc-epinions dataset
-  r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
-  open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz', 'wb').write(r.content)
-  with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz', 'rb') as f_in:
-      with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt', 'wb') as f_out:
-          shutil.copyfileobj(f_in, f_out)
-  with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt') as f:
-      lines = f.readlines()
-  lines = lines[4:] # Remove first 4 lines of txt file
-  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt", "w")
-  f.writelines(lines)
-  f.close()
-  os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt.gz')
+    # Loads all URLs from input file and initialize their neighbors.
+    links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
 
-  # Create list of nodes
-  nodes = set()
-  for i in lines :
-    node1, node2 = i.split('\t')
-    if not ('\n' in node1) :
-      node1 = node1 + '\n'
-    if not ('\n' in node2) :
-      node2 = node2 + '\n'
-    nodes.add(node1)
-    nodes.add(node2)
-  f = open("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1_nodes.txt", "w")
-  f.writelines(nodes)
-  f.close()
+    # Loads all URLs with other URL(s) link to from input file and initialize ranks of them to one.
+    ranks = links.map(lambda url_neighbors: (url_neighbors[0], 1.0))
 
-  schema = StructType([ \
-    StructField("src",StringType(),True), \
-    StructField("dst",StringType(),True), \
-  ])
-  edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1.txt", spark, '\t', False, schema)
-  schema = StructType([ \
-      StructField("id",StringType(),True), \
-  ])
-  nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/soc-Epinions1_nodes.txt", spark, '\t', False, schema)
+    # Record time per iteration
+    times = []
 
-elif (dataset == "wiki-topcats") : # RAM issues, unused
-  # r = requests.get("https://snap.stanford.edu/data/wiki-topcats.txt.gz")
-  # open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'wb').write(r.content)
-  # with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz', 'rb') as f_in:
-  #     with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt', 'wb') as f_out:
-  #         shutil.copyfileobj(f_in, f_out)
+    # Calculates and updates URL ranks continuously using PageRank algorithm.
+    for iteration in range(int(sys.argv[2])):
+        # Starting time 
+        start = time.perf_counter()
 
-  # # Create list of nodes from edgelist
-  # with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt') as f:
-  #   lines = f.readlines()
-  # nodes = set()
-  # for i in lines :
-  #   node1, node2 = i.split(' ')
-  #   if not ('\n' in node1) :
-  #     node1 = node1 + '\n'
-  #   if not ('\n' in node2) :
-  #     node2 = node2 + '\n'
-  #   nodes.add(node1)
-  #   nodes.add(node2)
-  # f = open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats_nodes.txt', "w")
-  # f.writelines(nodes)
-  # f.close()
+        # Calculates URL contributions to the rank of other URLs.
+        contribs = links.join(ranks).flatMap(lambda url_urls_rank: computeContribs(
+            url_urls_rank[1][0], url_urls_rank[1][1]  # type: ignore[arg-type]
+        ))
 
-  # schema = StructType([ \
-  #   StructField("src",StringType(),True), \
-  #   StructField("dst",StringType(),True), \
-  # ])
-  # edgelist = getEdgelist("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt", spark, ' ', False, schema)
-  # schema = StructType([ \
-  #   StructField("id",StringType(),True), \
-  # ])
-  # nodelist = getNodes("/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats_nodes.txt", spark, ' ', False, schema)
-  #os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz')
-  exit()
-else :
-  exit()
+        # Re-calculates URL ranks based on neighbor contributions.
+        ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
 
-g = GraphFrame(nodelist, edgelist)
-times = repetition_experiment(g, repetitions)
-nodeCount = sys.argv[1]
-np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_repetitions_{repetitions}_{dataset}_nodes_{nodeCount}.npy', np.array(times))
+        # End time 
+        end = time.perf_counter()
+        times.append(end-start)
+      
+    spark.stop()
+    nodeCount = sys.argv[3]
+    filename = sys.argv[2].split('/')[1].split('.')[0]
+    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))

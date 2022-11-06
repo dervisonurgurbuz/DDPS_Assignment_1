@@ -7,7 +7,7 @@ set -e # The set command allows you to manage certain flags and characteristics 
 if [[ $# -lt 1 ]] ; then
 	echo ""
 	echo "usage: source deploy_spark.sh [nodes] [dataset] [pagerank iterations]"
-	echo "for example: source deploy_spark.sh node105,node106,node107 soc-Epinions1 10"
+	echo "for example: source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10"
 	echo ""
 	exit 1
 fi
@@ -36,4 +36,4 @@ echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> spark-env.sh
 echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
 
-ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py ${#node_list[@]} ${2} ${3}" 
+ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py ${2} ${3} ${#node_list[@]}" 
