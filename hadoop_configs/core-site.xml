@@ -23,6 +23,6 @@
 </property>
 <property>
 <name>hadoop.tmp.dir</name>
-<value>hdfs/temp</value>
+<value>file://${hadoop.tmp.dir}/dfs/data</value>
 </property>
 </configuration>
