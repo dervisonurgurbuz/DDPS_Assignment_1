@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Run spark first before running this, so that datasets and .bashrc are set
 set -e
 
 if [[ $# -lt 1 ]] ; then
@@ -41,18 +41,18 @@ echo "worker is "$worker
 
 # Copy configuration files to hadoop folder
 # Originally, slaves only contains 'localhost'
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
-# cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/slaves /var/scratch/$USER/hadoop/etc/hadoop/slaves 
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/hdfs-site.xml /var/scratch/$USER/hadoop/etc/hadoop/hdfs-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/core-site.xml /var/scratch/$USER/hadoop/etc/hadoop/core-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/yarn-site.xml /var/scratch/$USER/hadoop/etc/hadoop/yarn-site.xml
+cp /var/scratch/$USER/DDPS_Assignment_1/hadoop_configs/mapred-site.xml /var/scratch/$USER/hadoop/etc/hadoop/mapred-site.xml
 
 # Start hadoop DFS daemons and yarn 
-# start-dfs.sh
-# start-yarn.sh
+start-dfs.sh
+start-yarn.sh
 
 ######################## UNCOMMENT AND RUN ONCE ################################################
-# Format namenode 
+# # Format namenode 
 # hdfs namenode -format # Maybe format with clusterID (hdfs namenode -format -clusterID CID-887fb3d7-6840-45c2-8fea-eaa72b82b118)
 # # Create input and output directories on hdfs
 # hadoop fs -mkdir -p /input
@@ -77,8 +77,8 @@ end_time=$(date +%s.%N)
 DIFF=$(echo "$end_time - $start_time" | bc)
 
 # Stop daemons & yarn
-# stop-dfs.sh
-# stop-yarn.sh
+stop-dfs.sh
+stop-yarn.sh
 
 # Print results
 echo "Elapsed time for ${2} iteration(s): $DIFF seconds"
