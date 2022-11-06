@@ -25,7 +25,7 @@ pip install --user pandas
     rm /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz
     ```
 
-	Usage: 
+	Deploy spark: 
     
     ```console
     source deploy_spark.sh [nodes] [dataset] [pagerank iterations]
@@ -41,7 +41,7 @@ pip install --user pandas
 
 3. Run hadoop (from master node (SSH TO IT FIRST))(only works for soc-Epinions1.txt dataset):
 
-    (do once) uncomment the following lines in deploy_hadoop.sh
+    (do once) uncomment the following lines in deploy_hadoop.sh:
     ```console 
     # Download hadoop
     curl -L -o "/var/scratch/$USER/spark/jars/graphframes-0.8.2-spark3.2-s_2.12.jar" https://repos.spark-packages.org/graphframes/graphframes/0.8.2-spark3.2-s_2.12/graphframes-0.8.2-spark3.2-s_2.12.jar
@@ -97,7 +97,7 @@ pip install --user pandas
     hadoop fs -put -f datasets/soc-Epinions1.txt /input
     ```
 
-    Usage: 
+    Deploy hadoop: 
 
     ```console 
     source deploy_hadoop.sh [nodes] [pagerank iterations]
@@ -106,7 +106,8 @@ pip install --user pandas
     ```console
     source deploy_hadoop.sh node105,node106,node107 10
     ```
-    (do once) Outcomment all commands above again.
+    (do once) Outcomment all mentioned commands again.
+
     Times for pagerank will be available in the folder: hadoop_results
 
 3. (optional) Plot results with plotting.py
