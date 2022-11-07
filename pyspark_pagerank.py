@@ -94,11 +94,10 @@ if __name__ == "__main__":
         # End time 
         end = time.perf_counter()
         times.append(end-start)
-    ranks = []
+
     # Collects all URL ranks and dump them to console.
     for (link, rank) in ranks.collect():
         print("%s has rank: %s." % (link, rank))
-        ranks.append(rank)
 
     spark.stop()
     nodeCount = sys.argv[3]
