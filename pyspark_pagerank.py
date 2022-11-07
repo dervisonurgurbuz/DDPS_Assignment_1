@@ -97,4 +97,4 @@ if __name__ == "__main__":
 
     spark.stop()
     nodeCount = sys.argv[3]
-    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
+    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/optimized_spark_results/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
