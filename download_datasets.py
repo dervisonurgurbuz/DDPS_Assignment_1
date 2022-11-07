@@ -31,3 +31,9 @@ with gzip.open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.tx
     with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt', 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
 os.remove('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt.gz')
+
+with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt') as f:
+    newText=f.read().replace(' ', '\t')
+
+with open('/var/scratch/ddps2202/DDPS_Assignment_1/datasets/wiki-topcats.txt', "w") as f:
+    f.write(newText)

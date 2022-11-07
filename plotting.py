@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def plot_repetition_experiment (filename, times) :
   x = range(1,11)
-  times_labels = [round(num, 1) for num in times]
+  times_labels = [round(num, 2) for num in times]
   fig, ax = plt.subplots()
   fig = plt.bar(x, times)
 
@@ -14,8 +14,8 @@ def plot_repetition_experiment (filename, times) :
   plt.ylabel("Running time (seconds)")
   plt.ylim([0, max(times)*1.3])
   average = sum(times)/len(times)
-  average = round(average, 1)
-  std = round(np.std(times),1)
+  average = round(average, 2)
+  std = round(np.std(times),2)
   props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
   plt.text(0.05, 0.95, f"Mean ~ {average}s\nStandard deviation ~ {std}s ", transform=ax.transAxes, fontsize=14,
           verticalalignment='top', bbox=props)
@@ -25,7 +25,7 @@ def plot_repetition_experiment (filename, times) :
   plt.show()
   fig.savefig(f'png_files/{filename}.png')
 
-filename = "npy_files/musae_crocodile_8.npy"
-figname = filename.split(".")[0].split("/")[1]
+filename = "npy_files/PR_iteration_10_soc-Epinions1_nodes_3.npy"
+figname = filename.split(".")[0].split('/')[1]
 times = np.loadtxt(filename)
 plot_repetition_experiment(figname,times)
