@@ -65,6 +65,7 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     ...
     if ("soc-Epinions1" is filename) :
+      exit()
       sep = '\t'
     elif ("wiki-topcats" is filename) :
       sep = ' '
@@ -104,5 +105,4 @@ if __name__ == "__main__":
 
     spark.stop()
     nodeCount = sys.argv[3]
-    
     np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
