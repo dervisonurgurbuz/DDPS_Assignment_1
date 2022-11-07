@@ -62,13 +62,13 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     URL         neighbor URL
     #     ...
-    if (sys.argv[1] == "datasets/soc-Epinions1.txt") :
+    if (sys.argv[1] == "soc-Epinions1.txt") :
       sep = '\t'
-    elif (sys.argv[1] == "datasets/wiki-topcats.txt") :
+    elif (sys.argv[1] == "wiki-topcats.txt") :
       sep = ' '
     else :
       sep = ','
-    lines = spark.read.text(f"../DDPS_Assignment_1/{sys.argv[1]}", lineSep=sep).rdd.map(lambda r: r[0])
+    lines = spark.read.text(f"/var/scratch/ddps2202/DDPS_Assignment_1/datasets/{sys.argv[1]}", lineSep=sep).rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()

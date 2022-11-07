@@ -7,7 +7,7 @@ set -e # The set command allows you to manage certain flags and characteristics 
 if [[ $# -lt 1 ]] ; then
 	echo ""
 	echo "usage: source deploy_spark.sh [nodes] [dataset] [pagerank iterations]"
-	echo "for example: source deploy_spark.sh node105,node106,node107 datasets/soc-Epinions1.txt 10"
+	echo "for example: source deploy_spark.sh node105,node106,node107 soc-Epinions1.txt 10"
 	echo ""
 	exit 1
 fi
