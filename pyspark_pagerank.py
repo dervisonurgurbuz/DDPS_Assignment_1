@@ -27,20 +27,17 @@ import sys
 import numpy as np
 import time
 from operator import add
-from typing.Mapping import Iterable, Tuple
-
-from pyspark.resultiterable import ResultIterable
 from pyspark.sql import SparkSession
 
 
-def computeContribs(urls: ResultIterable[str], rank: float) -> Iterable[Tuple[str, float]]:
+def computeContribs(urls, rank):
     """Calculates URL contributions to the rank of other URLs."""
     num_urls = len(urls)
     for url in urls:
         yield (url, rank / num_urls)
 
 
-def parseNeighbors(urls: str) -> Tuple[str, str]:
+def parseNeighbors(urls):
     """Parses a urls pair string into urls pair."""
     parts = re.split(r'\s+', urls)
     return parts[0], parts[1]
