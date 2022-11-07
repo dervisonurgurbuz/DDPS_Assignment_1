@@ -103,4 +103,3 @@ if __name__ == "__main__":
     nodeCount = sys.argv[3]
     filename = sys.argv[1].rsplit('/',1)[-1].split('.')[0]
     np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
-    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/npy_files/ranks_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
