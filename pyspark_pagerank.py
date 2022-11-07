@@ -62,7 +62,8 @@ if __name__ == "__main__":
         .builder\
         .appName("PythonPageRank")\
         .getOrCreate()
-
+    from sparkmeasure import StageMetrics
+    
     # Loads in input file. It should be in format of:
     #     URL         neighbor URL
     #     URL         neighbor URL
