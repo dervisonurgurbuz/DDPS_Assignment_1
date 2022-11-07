@@ -34,6 +34,7 @@ cd /var/scratch/$USER/spark/conf && cp spark-env.sh.template spark-env.sh && cp 
 sleep 3
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> spark-env.sh
 echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
+echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
 
-ssh $master "spark-submit /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/DDPS_Assignment_1/datasets/${2} ${3} ${#node_list[@]}"  
+ssh $master "spark-submit --executor-memory 10g /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/DDPS_Assignment_1/datasets/${2} ${3} ${#node_list[@]}"  
