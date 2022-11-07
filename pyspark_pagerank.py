@@ -27,7 +27,7 @@ import sys
 import numpy as np
 import time
 from operator import add
-from typing import Iterable, Tuple
+from typing.Mapping import Iterable, Tuple
 
 from pyspark.resultiterable import ResultIterable
 from pyspark.sql import SparkSession
