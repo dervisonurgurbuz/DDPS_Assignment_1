@@ -37,5 +37,5 @@ echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
 
 mv /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/spark/examples/src/main/pagerank.py
-
-ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit examples/src/main/python/pagerank.py /var/scratch/$USER/DDPS_Assignment_1/datasets/${2} ${3} ${#node_list[@]}" 
+echo 
+ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit examples/src/main/python/pagerank.py ${2} ${3} ${#node_list[@]}" 
