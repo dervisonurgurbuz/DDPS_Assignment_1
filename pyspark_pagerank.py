@@ -63,9 +63,9 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     ...
 
-    if (sys.argv[2] == "datasets/soc-Epinions1.txt") :
+    if (sys.argv[1] == "datasets/soc-Epinions1.txt") :
       sep = '\t'
-    elif (sys.argv[2] == "datasets/wiki-topcats.txt") :
+    elif (sys.argv[1] == "datasets/wiki-topcats.txt") :
       sep = ' '
     else :
       sep = ','
