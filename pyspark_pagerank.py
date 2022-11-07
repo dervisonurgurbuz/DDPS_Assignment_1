@@ -64,7 +64,7 @@ if __name__ == "__main__":
         .config("spark.jars.packages","ch.cern.sparkmeasure:spark-measure_2.11:0.14")\
         .getOrCreate()
     
-    from sparkmeasure import TaskMetrics
+    # from sparkmeasure import TaskMetrics
 
     # Loads in input file. It should be in format of:
     #     URL         neighbor URL
@@ -73,8 +73,8 @@ if __name__ == "__main__":
     #     ...
     lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
 
-    taskmetrics = TaskMetrics(spark)
-    taskmetrics.begin()
+    # taskmetrics = TaskMetrics(spark)
+    # taskmetrics.begin()
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
@@ -97,11 +97,12 @@ if __name__ == "__main__":
         print("%s has rank: %s." % (link, rank))
         break
 
-    taskmetrics.end()
-    taskmetrics.print_report()
+    # taskmetrics.end()
+    # taskmetrics.print_report()
     spark.stop()
     # End time 
     end = time.perf_counter()
     times.append(end-start)
     nodeCount = sys.argv[3]
+    print(times)
     np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/optimized_spark_results/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
