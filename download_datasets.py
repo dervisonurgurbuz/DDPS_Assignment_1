@@ -1,14 +1,7 @@
 import requests
-import io
-import zipfile
 import shutil
 import gzip
 import os
-
-# Get wikipedia dataset
-r = requests.get("https://snap.stanford.edu/data/wikipedia.zip")
-z = zipfile.ZipFile(io.BytesIO(r.content))
-z.extractall("/var/scratch/ddps2202/DDPS_Assignment_1/datasets")
 
 # Get soc-epinions dataset
 r = requests.get("https://snap.stanford.edu/data/soc-Epinions1.txt.gz")
