@@ -62,13 +62,13 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     URL         neighbor URL
     #     ...
-    # if (sys.argv[1] == "soc-Epinions1.txt") :
-    #   sep = '\t'
-    # elif (sys.argv[1] == "wiki-topcats.txt") :
-    #   sep = ' '
-    # else :
-    #   sep = ','
-    lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
+    if ("soc-Epinions1.txt" not in sys.argv[1]) :
+      sep = '\t'
+    elif ("wiki-topcats.txt" not in sys.argv[1]) :
+      sep = ' '
+    else :
+      sep = ','
+    lines = spark.read.text(sys.argv[1], lineSep=sep).rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
