@@ -43,6 +43,7 @@ def parseNeighbors(urls):
 
 
 if __name__ == "__main__":
+    print("mainnn")
     if len(sys.argv) != 4:
         print("testttt")
         print(f"Arguments = {len(sys.argv)}")
