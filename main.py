@@ -74,15 +74,30 @@ def findtotalviews(search, df3, search_df):
 
 
 # This function search pages that exactly matching given word
-def exactmatch(search, df3):
-    df7 = df3.select("page_title", when(df3.page_title == search, 1).otherwise(0))
-    df7.show()
+def exactmatch(search, rdd):
 
+    rdd4 = rdd.filter(lambda x: search in x[1])
+    # df7 = df3.select("page_title", when(df3.page_title == search, 1).otherwise(0))
+    # df7.show()
+    data2 = rdd4.collect()
+    view = 0
+    for f in data2:
+        # print(f[1] + "  " + f[2])
+        view += int(f[2])
+
+    return view
 
 def partiallymatch(search, df3):
-    search = "%" + search + "%"
-    df8 = df3.select("page_title", df3.page_title.like(search))
+    # search = "%" + search + "%"
+    df8 = df3.filter(df3.page_title.contains(search))
     df8.show()
+    row_list = df8.collect()
+    view = 0
+    for x in range(0, len(row_list)):
+        view += int(row_list[x].__getitem__('views'))
+
+    return view
+
 
 
 # Extra calculating page view per page
@@ -107,15 +122,17 @@ print("Total view of all pages: ", view)
 
 et1 = time.time()
 # Part 2 Execution
+rdd = df3.rdd
 print("Exactly Match")
 name = "Siren"
-exactmatch(name, df3)
+print('Totatl views of ', name, '=', exactmatch(name, rdd))
 et2 = time.time()
 
 # Part 3 Execution
 print("Partially Match")
 name = "Sjabloon"
-partiallymatch(name, df3)
+print('Partial views of ', name, '=', partiallymatch(name, df3))
+
 et3 = time.time()
 
 total_compile_time = et3 - st
