@@ -90,14 +90,15 @@ if __name__ == "__main__":
 
         # Re-calculates URL ranks based on neighbor contributions.
         ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
-        stagemetrics.end()
-        stagemetrics.print_report()
+
 
     # Collects all URL ranks and dump them to console.
     for (link, rank) in ranks.collect():
         print("%s has rank: %s." % (link, rank))
         break
 
+    stagemetrics.end()
+    stagemetrics.print_report()
     spark.stop()
     # End time 
     end = time.perf_counter()
