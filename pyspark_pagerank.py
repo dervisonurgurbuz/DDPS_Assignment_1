@@ -29,7 +29,6 @@ import time
 from operator import add
 from pyspark.sql import SparkSession
 
-
 def computeContribs(urls, rank):
     """Calculates URL contributions to the rank of other URLs."""
     num_urls = len(urls)
@@ -45,6 +44,7 @@ def parseNeighbors(urls):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
+        print("Usage: pagerank <file> <iterations>", file=sys.stderr)
         sys.exit(-1)
 
     print("WARN: This is a naive implementation of PageRank and is given as an example!\n" +
@@ -62,7 +62,6 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     URL         neighbor URL
     #     ...
-
     if (sys.argv[1] == "datasets/soc-Epinions1.txt") :
       sep = '\t'
     elif (sys.argv[1] == "datasets/wiki-topcats.txt") :
@@ -86,9 +85,8 @@ if __name__ == "__main__":
         start = time.perf_counter()
 
         # Calculates URL contributions to the rank of other URLs.
-        contribs = links.join(ranks).flatMap(lambda url_urls_rank: computeContribs(
-            url_urls_rank[1][0], url_urls_rank[1][1]  # type: ignore[arg-type]
-        ))
+        contribs = links.join(ranks).flatMap(
+            lambda url_urls_rank: computeContribs(url_urls_rank[1][0], url_urls_rank[1][1]))
 
         # Re-calculates URL ranks based on neighbor contributions.
         ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
@@ -96,7 +94,11 @@ if __name__ == "__main__":
         # End time 
         end = time.perf_counter()
         times.append(end-start)
-      
+
+    # Collects all URL ranks and dump them to console.
+    for (link, rank) in ranks.collect():
+        print("%s has rank: %s." % (link, rank))
+
     spark.stop()
     nodeCount = sys.argv[3]
     filename = sys.argv[1].split('/')[-1].split('.')[0]
