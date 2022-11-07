@@ -37,4 +37,4 @@ echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
 
-ssh $master "spark-submit --executor-memory 15g /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/DDPS_Assignment_1/datasets/${2} ${3} ${#node_list[@]}"  
+ssh $master "spark-submit --executor-memory 4g /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/DDPS_Assignment_1/datasets/${2} ${3} ${#node_list[@]}"  
