@@ -67,6 +67,7 @@ if __name__ == "__main__":
     from sparkmeasure import StageMetrics
 
     stagemetrics = StageMetrics(spark)
+    stagemetrics.begin()
     # Loads in input file. It should be in format of:
     #     URL         neighbor URL
     #     URL         neighbor URL
@@ -94,7 +95,8 @@ if __name__ == "__main__":
     for (link, rank) in ranks.collect():
         print("%s has rank: %s." % (link, rank))
         break
-
+    stagemetrics.end()
+    stagemetrics.print_report()
     spark.stop()
     # End time 
     end = time.perf_counter()
