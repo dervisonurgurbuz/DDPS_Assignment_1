@@ -43,6 +43,11 @@ def parseNeighbors(urls):
 
 
 if __name__ == "__main__":
+    # Record time per iteration
+    times = []
+
+    # Starting time 
+    start = time.perf_counter()
     filename = sys.argv[1].rsplit('/',1)[-1].split('.')[0]
     if len(sys.argv) != 4:
         print("Usage: pagerank <file> <iterations>", file=sys.stderr)
@@ -71,13 +76,8 @@ if __name__ == "__main__":
     # Loads all URLs with other URL(s) link to from input file and initialize ranks of them to one.
     ranks = links.map(lambda url_neighbors: (url_neighbors[0], 1.0))
 
-    # Record time per iteration
-    times = []
-
     # Calculates and updates URL ranks continuously using PageRank algorithm.
     for iteration in range(int(sys.argv[2])):
-        # Starting time 
-        start = time.perf_counter()
 
         # Calculates URL contributions to the rank of other URLs.
         contribs = links.join(ranks).flatMap(
@@ -86,15 +86,14 @@ if __name__ == "__main__":
         # Re-calculates URL ranks based on neighbor contributions.
         ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
 
-        # End time 
-        end = time.perf_counter()
-        times.append(end-start)
-
     # Collects all URL ranks and dump them to console.
     for (link, rank) in ranks.collect():
         print("%s has rank: %s." % (link, rank))
         break
 
     spark.stop()
+    # End time 
+    end = time.perf_counter()
+    times.append(end-start)
     nodeCount = sys.argv[3]
     np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/optimized_spark_results/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))

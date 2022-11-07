@@ -10,7 +10,7 @@ def plot_repetition_experiment (filename, times) :
   for i in range(len(x)):
     plt.text(i+1, times[i], times_labels[i], ha = 'center', va = 'bottom')
   plt.xticks(x)
-  plt.xlabel("Repetition")
+  plt.xlabel("Iteration")
   plt.ylabel("Running time (seconds)")
   plt.ylim([0, max(times)*1.3])
   average = sum(times)/len(times)
@@ -25,7 +25,7 @@ def plot_repetition_experiment (filename, times) :
   plt.show()
   fig.savefig(f'png_files/{filename}.png')
 
-filename = "npy_files/PR_iteration_10_soc-Epinions1_nodes_3.npy"
+filename = "default_spark_results/PR_iteration_10_soc-Epinions1_nodes_4.npy"
 figname = filename.split(".")[0].split('/')[1]
 times = np.loadtxt(filename)
 plot_repetition_experiment(figname,times)
