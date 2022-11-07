@@ -35,7 +35,7 @@ sleep 3
 echo "export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2" >> spark-env.sh
 echo "export SPARK_MASTER_HOST=$master" >> spark-env.sh
 echo "$worker" > workers
-dataset = "/var/scratch/$USER/DDPS_Assignment_1/datasets/${2}"
+$dataset = "/var/scratch/$USER/DDPS_Assignment_1/datasets/${2}"
 cp /var/scratch/$USER/DDPS_Assignment_1/pyspark_pagerank.py /var/scratch/$USER/spark/examples/src/main/python/pyspark_pagerank.py
 ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit examples/src/main/python/pyspark_pagerank.py ${dataset} ${3} ${#node_list[@]}" 
 #ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit ../DDPS_Assignment_1/pyspark_pagerank.py ${2} ${3} ${#node_list[@]}" 
