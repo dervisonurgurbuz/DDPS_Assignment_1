@@ -100,7 +100,6 @@ if __name__ == "__main__":
         print("Printing 1 results:")
         print("%s has rank: %s." % (link, rank))
         print("Pagerank ran succesfully!")
-        break
 
     spark.stop()
     nodeCount = sys.argv[3]
