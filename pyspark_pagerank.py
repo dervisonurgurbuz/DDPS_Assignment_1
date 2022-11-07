@@ -61,9 +61,12 @@ if __name__ == "__main__":
     spark = SparkSession\
         .builder\
         .appName("PythonPageRank")\
+        .config("spark.jars.packages","ch.cern.sparkmeasure:spark-measure_2.11:0.14")\
         .getOrCreate()
-    from sparkmeasure import StageMetrics
     
+    from sparkmeasure import StageMetrics
+
+    stagemetrics = StageMetrics(spark)
     # Loads in input file. It should be in format of:
     #     URL         neighbor URL
     #     URL         neighbor URL
