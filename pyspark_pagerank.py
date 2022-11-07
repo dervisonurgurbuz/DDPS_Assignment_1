@@ -44,7 +44,6 @@ def parseNeighbors(urls):
 
 if __name__ == "__main__":
     filename = sys.argv[1].rsplit('/',1)[-1].split('.')[0]
-    print(filename)
     if len(sys.argv) != 4:
         print("Usage: pagerank <file> <iterations>", file=sys.stderr)
         sys.exit(-1)
@@ -65,13 +64,12 @@ if __name__ == "__main__":
     #     URL         neighbor URL
     #     ...
     if ("soc-Epinions1" is filename) :
-      exit()
       sep = '\t'
     elif ("wiki-topcats" is filename) :
       sep = ' '
     else :
       sep = ','
-    lines = spark.read.text(sys.argv[1], lineSep=sep).rdd.map(lambda r: r[0])
+    lines = spark.read.text(sys.argv[1], lineSep='\t').rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
