@@ -99,7 +99,7 @@ if __name__ == "__main__":
         print("%s has rank: %s." % (link, rank))
         break
 
-  
+    print(spark.time())
     spark.stop()
     # End time 
     end = time.perf_counter()
