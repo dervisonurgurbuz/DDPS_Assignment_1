@@ -100,4 +100,4 @@ if __name__ == "__main__":
     times.append(end-start)
     nodeCount = sys.argv[3]
     print(f"Total time:{times[0]}")
-    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/optimized_spark_results/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
+    np.savetxt(f'/var/scratch/ddps2202/DDPS_Assignment_1/default_spark_results/PR_iteration_{sys.argv[2]}_{filename}_nodes_{nodeCount}.npy', np.array(times))
