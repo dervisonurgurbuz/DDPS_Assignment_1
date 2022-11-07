@@ -43,10 +43,7 @@ def parseNeighbors(urls):
 
 
 if __name__ == "__main__":
-    print("mainnn")
     if len(sys.argv) != 4:
-        print("testttt")
-        print(f"Arguments = {len(sys.argv)}")
         print("Usage: pagerank <file> <iterations>", file=sys.stderr)
         sys.exit(-1)
 
@@ -71,7 +68,7 @@ if __name__ == "__main__":
       sep = ' '
     else :
       sep = ','
-    lines = spark.read.text(sys.argv[1], lineSep=sep).rdd.map(lambda r: r[0])
+    lines = spark.read.text(f"/var/scratch/$USER/DDPS_Assignment_1/datasets/{sys.argv[1]}", lineSep=sep).rdd.map(lambda r: r[0])
 
     # Loads all URLs from input file and initialize their neighbors.
     links = lines.map(lambda urls: parseNeighbors(urls)).distinct().groupByKey().cache()
